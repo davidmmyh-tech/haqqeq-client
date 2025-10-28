@@ -1,6 +1,6 @@
 import { release } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
-import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
+// import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
 import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { RELEASE_QUERY_KEY } from '@/constants/query-keys';
@@ -62,7 +62,7 @@ export default function ReleaseDetailsPage() {
         <section>
           <div className="container space-y-8">
             <SectionHeader icon={release} title="المزيد من الإصدارات" as="h4" />
-            <MoreRelesesSection />
+            {/* <MoreRelesesSection /> */}
           </div>
         </section>
       </div>

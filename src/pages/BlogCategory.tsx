@@ -3,23 +3,23 @@ import Img from '@/components/ui/extend/Img';
 import HSplit from '@/components/ui/h-split';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
-import { BLOG_CATEGORY_QUERY_KEY, INFINIT_QUERY_KEY } from '@/constants/query-keys';
+import { PODCAST_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
-import { getBlogsCategory } from '@/services/getBlogs';
+import { getPodcastDetails } from '@/services/getPodcasts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useParams } from 'react-router';
 
 const PAGE_LIMIT = 6;
 
-export default function BlogCategoryPage() {
+export default function PodcastDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 
   const { data, isError, isLoading, refetch, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [BLOG_CATEGORY_QUERY_KEY, INFINIT_QUERY_KEY, id],
-      queryFn: ({ pageParam }) => getBlogsCategory(id, { limit: PAGE_LIMIT, page: pageParam }),
+      queryKey: [PODCAST_QUERY_KEY, id],
+      queryFn: ({ pageParam }) => getPodcastDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage.episodes.length < PAGE_LIMIT) return undefined;
         return allPages.length + 1;

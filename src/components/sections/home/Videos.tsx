@@ -31,14 +31,15 @@ export default function VideosSection() {
         isEmpty={!episodes.length}
       >
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {episodes.map((episode) => (
+          {episodes.map((video) => (
             <VedioCard
-              key={episode.id}
-              id={episode.id}
-              thumbnail={episode.cover_image}
-              category={episode.podcast?.slug}
-              title={episode.title}
-              publishDate={episode.published_at}
+              key={video.id}
+              id={video.id}
+              thumbnail={video.image_path}
+              category={video.category.name}
+              categoryId={video.category.id}
+              title={video.title}
+              publishDate={video.created_at}
             />
           ))}
         </div>

@@ -66,7 +66,7 @@ export default function SearchBar() {
                         className="flex cursor-pointer gap-2 px-4 py-2"
                         onMouseDown={(e) => e.preventDefault()}
                       >
-                        <Img src={release.image} alt={release.title} className="h-9 w-9 rounded-sm object-cover" />
+                        <Img src={release.images[0]} alt={release.title} className="h-9 w-9 rounded-sm object-cover" />
                         <div>
                           <p className="text-sm font-bold">{release.title}</p>
                           <p className="text-muted text-xs">إصدار</p>
