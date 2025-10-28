@@ -1,0 +1,84 @@
+name: Deploy
+
+on:
+  push:
+    branches: ['main', 'master']
+
+concurrency:
+  group: deploy-haqqeq
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Create .env
+        run: |
+          cat > .env << 'EOF'
+          VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
+          EOF
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Copy dist to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: 'dist/*'
+          target: '/var/www/haqqeq_tmp'
+          strip_components: 1
+
+      - name: Activate release (atomic swap)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: 'set -euo pipefail
+            sudo mkdir -p /var/www/haqqeq_tmp
+            sudo mkdir -p /var/www/haqqeq
+            # move uploaded tmp into a new release dir
+            ts=$(date +%Y%m%d%H%M%S)
+            sudo mkdir -p /var/www/releases/haqqeq-$ts
+            sudo rsync -a --delete /var/www/haqqeq_tmp/ /var/www/releases/haqqeq-$ts/
+            sudo rm -rf /var/www/haqqeq_tmp
+            # point current to the new release
+            sudo ln -sfn /var/www/releases/haqqeq-$ts /var/www/haqqeq
+            # ensure permissions (www-data or your nginx user)
+            sudo chown -R www-data:www-data /var/www/haqqeq /var/www/releases
+            # reload nginx if config present
+            if command -v systemctl >/dev/null 2>&1; then
+            sudo systemctl reload nginx || true
+            fi'

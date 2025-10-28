@@ -1,0 +1,43 @@
+import HeroAudio from '@/components/ui/extend/HeroTarack';
+import Img from '@/components/ui/extend/Img';
+import ViewsBadge from '@/components/ui/extend/ViewsBadge';
+import { parsedDate } from '@/lib/utils';
+import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
+import { Link } from 'react-router';
+import usePrefetchVideo from '@/hooks/queries/prefetch/usePrefetchVideo';
+import type { Episode } from '@/schemas/types';
+
+export default function PodcastsHeroSection({ heroPodcast }: { heroPodcast: Episode }) {
+  const { handlePrefetchVideo } = usePrefetchVideo();
+
+  return (
+    <DefaultMotionDiv
+      onMouseEnter={() => handlePrefetchVideo(heroPodcast?.id || '')}
+      className="flex flex-col items-end md:h-80 md:flex-row"
+    >
+      <Link to={`/البودكاست/${heroPodcast?.id}`} className="max-h-80 basis-1/3 overflow-clip md:h-80">
+        <Img
+          src={heroPodcast?.cover_image}
+          alt={heroPodcast?.title}
+          className="h-full w-full rounded-2xl object-cover object-top"
+        />
+      </Link>
+
+      <div className="w-full sm:p-4 md:basis-2/3">
+        <h1 className="mb-4 text-[28px] font-medium">
+          <Link to={`/البودكاست/${heroPodcast?.id}`}>{heroPodcast?.title}</Link>
+        </h1>
+        <p className="text-muted mb-6">{heroPodcast?.description}</p>
+
+        <p className="inline-block">
+          في <span className="font-bold">{heroPodcast?.title}</span>
+        </p>
+        <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroPodcast?.created_at || '')}</p>
+
+        <ViewsBadge views={heroPodcast?.views_count || 0} />
+
+        <HeroAudio src={heroPodcast?.audio_url ?? ''} />
+      </div>
+    </DefaultMotionDiv>
+  );
+}
