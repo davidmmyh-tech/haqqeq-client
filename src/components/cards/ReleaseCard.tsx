@@ -39,7 +39,7 @@ const ReleaseCard = memo(({ title, description, imageSrc, srcUrl, id }: Props) =
       delay={0.2}
       className="flex flex-col sm:flex-row md:items-end"
     >
-      <Link to={`/إصدارات/${id}`} className="block aspect-295/409 shrink-0 sm:w-56 lg:w-72">
+      <Link to={`/إصدارات/${id}`} className="block aspect-295/409 shrink-0 lg:w-52">
         <Img className="h-full w-full rounded-2xl object-cover" src={imageSrc || ''} alt={title} />
       </Link>
 

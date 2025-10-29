@@ -1,7 +1,6 @@
 import Img from '@/components/ui/extend/Img';
 import ViewsBadge from '@/components/ui/extend/ViewsBadge';
 import { parsedDate } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
 import usePrefetchRelease from '@/hooks/queries/prefetch/usePrefetchRelease';
@@ -64,12 +63,15 @@ export default function ReleasesHeroSection({ heroRelease }: { heroRelease: Rele
         >
           تحميــــل
         </SubmitButton>
-        <Button
-          variant="link"
-          className="border-foreground text-foreground h-11 w-36 border-2 bg-transparent text-3xl hover:no-underline"
+        <a
+          href={heroRelease.file_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="border-foreground text-foreground inline-flex h-11 w-32 justify-center rounded-md border-2 bg-transparent py-1 text-3xl hover:no-underline"
+          aria-busy={busy}
         >
           قــــراءة
-        </Button>
+        </a>
       </div>
     </DefaultMotionDiv>
   );
