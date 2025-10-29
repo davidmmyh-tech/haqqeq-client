@@ -2,8 +2,8 @@ import type { Release } from '@/schemas/types';
 import api from './api';
 
 type ReleasesResponse = {
-  current_page: number;
   data: Release[];
+  current_page: number;
   from: number;
   last_page: number;
   links: [

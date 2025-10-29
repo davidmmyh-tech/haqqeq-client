@@ -15,7 +15,7 @@ export default function ReleasesSection() {
 
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ['haqqeq-releases'],
-    queryFn: () => getReleases({ page: 2, limit: 5 }),
+    queryFn: () => getReleases({ page: 1, limit: 5 }),
     enabled: userViewed.current
   });
 
