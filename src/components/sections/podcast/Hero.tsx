@@ -4,15 +4,15 @@ import ViewsBadge from '@/components/ui/extend/ViewsBadge';
 import { parsedDate } from '@/lib/utils';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
-import usePrefetchVideo from '@/hooks/queries/prefetch/usePrefetchVideo';
 import type { Episode } from '@/schemas/types';
+import usePrefetchEpisode from '@/hooks/queries/prefetch/usePrefetchEpisode';
 
 export default function PodcastsHeroSection({ heroPodcast }: { heroPodcast: Episode }) {
-  const { handlePrefetchVideo } = usePrefetchVideo();
+  const { handlePrefetchEpisode } = usePrefetchEpisode();
 
   return (
     <DefaultMotionDiv
-      onMouseEnter={() => handlePrefetchVideo(heroPodcast?.id || '')}
+      onMouseEnter={() => handlePrefetchEpisode(heroPodcast?.id || '')}
       className="flex flex-col items-end md:h-80 md:flex-row"
     >
       <Link to={`/البودكاست/${heroPodcast?.id}`} className="max-h-80 basis-1/3 overflow-clip md:h-80">

@@ -1,23 +1,47 @@
 import { release } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
+import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
 // import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
 import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
-import { RELEASE_QUERY_KEY } from '@/constants/query-keys';
+import SubmitButton from '@/components/ui/submit-button';
+import { MORE_RELEASES_QUERY_KEY, RELEASE_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
-import { getReleaseDetails } from '@/services/getReleases';
+import { DownloadRelease } from '@/services/DownloadRelease';
+import { getReleaseDetails, getReleases } from '@/services/getReleases';
 import { useQuery } from '@tanstack/react-query';
+import { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
+import { toast } from 'react-toastify';
 
 export default function ReleaseDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
+  const [busy, setBusy] = useState(false);
 
   const { data, isError, isPending, refetch, isFetching } = useQuery({
     queryKey: [RELEASE_QUERY_KEY, id],
     queryFn: () => getReleaseDetails(id),
     throwOnError: true,
     retry: 0
+  });
+
+  const handleDownload = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (!data?.file_url) return;
+      setBusy(true);
+      await DownloadRelease(data.file_url, `${data.title}.pdf`, false).catch(() =>
+        toast.error('حدث خطأ أثناء التحميل. حاول مرة أخرى لاحقاً.')
+      );
+      setBusy(false);
+    },
+    [data?.file_url, data?.title]
+  );
+
+  const moreReleases = useQuery({
+    queryKey: [MORE_RELEASES_QUERY_KEY],
+    queryFn: () => getReleases({ page: 1, limit: 8 })
   });
 
   return (
@@ -36,14 +60,15 @@ export default function ReleaseDetailsPage() {
               <h1 className="mb-4 text-[28px] font-medium">{data?.title}</h1>
               <p className="text-muted mb-4">{data?.description}</p>
 
-              <a
-                href="/"
-                target="_blank"
-                download={data?.file_url}
-                className="bg-primary text-primary-foreground me-4 h-11 w-36 rounded-md px-4 py-2 text-3xl disabled:opacity-50"
+              <SubmitButton
+                isLoading={busy}
+                onClick={handleDownload}
+                className="me-4 h-11 w-32 text-3xl"
+                disabled={busy}
+                aria-busy={busy}
               >
                 تحميــــل
-              </a>
+              </SubmitButton>
             </div>
           </DefaultMotionDiv>
         </header>
@@ -62,7 +87,7 @@ export default function ReleaseDetailsPage() {
         <section>
           <div className="container space-y-8">
             <SectionHeader icon={release} title="المزيد من الإصدارات" as="h4" />
-            {/* <MoreRelesesSection /> */}
+            <MoreRelesesSection releases={moreReleases.data ?? []} />
           </div>
         </section>
       </div>

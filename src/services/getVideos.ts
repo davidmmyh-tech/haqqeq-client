@@ -1,4 +1,4 @@
-import type { Episode, Video } from '@/schemas/types';
+import type { Video } from '@/schemas/types';
 import api from './api';
 
 type VideosResponse = {
@@ -16,5 +16,5 @@ export async function getVideos({ page, limit = 5 }: { page: number; limit?: num
 }
 
 export async function getVideoDetails(id: string | number) {
-  return api.get<{ data: Episode }>(`/api/doc_videos/${id}`).then((res) => res.data.data);
+  return api.get<Video>(`/api/doc_videos/${id}`).then((res) => res.data);
 }

@@ -7,7 +7,7 @@ export default function AppWrapper({ children }: { children: React.ReactNode }) 
   return (
     <UserProvider>
       <ScrollRestoration />
-      <ToastContainer position="bottom-right" theme="dark" />
+      <ToastContainer position="bottom-left" theme="dark" />
       {children}
     </UserProvider>
   );

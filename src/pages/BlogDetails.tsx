@@ -12,7 +12,7 @@ import DOMPurify from 'dompurify';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { PencilLine } from 'lucide-react';
 import { BLOG_QUERY_KEY } from '@/constants/query-keys';
-
+//TODO: Add more blogs API
 export default function BlogDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 

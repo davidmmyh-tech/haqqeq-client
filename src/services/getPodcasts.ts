@@ -18,10 +18,12 @@ type PodcastsResponse = {
 type PodcastResponse = {
   podcast: Podcast;
   episodes: Episode[];
-  episode_count: number;
-  page: number;
-  limit: number;
-  last_page: number;
+  pagination: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
 };
 
 export default async function getPodcasts({ page, limit = 5 }: { page: number; limit?: number }) {

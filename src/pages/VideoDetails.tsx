@@ -1,18 +1,15 @@
 import { videos } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
-import MoreEpisodesSection from '@/components/sections/podcast/MoreEpisodes';
+import MoreVideosSection from '@/components/sections/videos/MoreVideos';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { VIDEO_CATEGORY_QUERY_KEY, VIDEO_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { parsedDate, remote } from '@/lib/utils';
-import { getPodcastDetails } from '@/services/getPodcasts';
-import { getVideoDetails } from '@/services/getVideos';
+import { getVideoDetails, getVideos } from '@/services/getVideos';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
-
-const PAGE_LIMIT = 6;
-
+//TODO: Add more Related videos API
 export default function VideoDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 
@@ -23,12 +20,12 @@ export default function VideoDetailsPage() {
     retry: 0
   });
 
-  const relatedEpisodesQuery = useQuery({
-    queryKey: [VIDEO_CATEGORY_QUERY_KEY, data?.podcast_id],
-    queryFn: () => getPodcastDetails(data?.podcast_id || '', { page: 1, limit: PAGE_LIMIT }),
-    enabled: !!data?.podcast_id && isFetched
+  const relatedVideosQuery = useQuery({
+    queryKey: [VIDEO_CATEGORY_QUERY_KEY, '5'],
+    queryFn: () => getVideos({ page: 1, limit: 6 }),
+    enabled: isFetched
   });
-  const relatedEpisodes = relatedEpisodesQuery.data?.episodes || [];
+  const relatedVideos = relatedVideosQuery.data?.data || [];
 
   return (
     <>
@@ -42,21 +39,19 @@ export default function VideoDetailsPage() {
             </DefaultMotionElement>
 
             <DefaultMotionElement as="p" className="text-muted mb-4 pe-14">
-              {data?.short_description}
+              {data?.description}
             </DefaultMotionElement>
 
             <DefaultMotionElement as="p">
-              في <span className="font-bold">{data?.podcast?.title}</span>
-              <span className="text-muted ms-3 inline-block text-sm">
-                {parsedDate(data?.published_at || data?.created_at)}
-              </span>
+              في <span className="font-bold">{'category'}</span>
+              <span className="text-muted ms-3 inline-block text-sm">{parsedDate(data?.created_at)}</span>
             </DefaultMotionElement>
 
             <DefaultMotionElement className="mt-8 aspect-video max-h-[80vh] w-full overflow-clip rounded-2xl bg-black">
               <video
                 controls
-                src={remote(`${data?.video_url}`)}
-                poster={data?.cover_image}
+                src={remote(`${data?.video_path}`)}
+                poster={data?.image_path}
                 className="h-full w-full bg-black object-contain"
               />
             </DefaultMotionElement>
@@ -70,10 +65,10 @@ export default function VideoDetailsPage() {
             </DefaultMotionElement>
           </section>
 
-          {relatedEpisodes.length > 0 && (
+          {relatedVideos.length > 0 && (
             <section className="space-y-4">
               <SectionHeader title="المزيد من حلقات حقق" icon={videos} />
-              <MoreEpisodesSection episodes={relatedEpisodes} />
+              <MoreVideosSection videos={relatedVideos} />
             </section>
           )}
         </div>

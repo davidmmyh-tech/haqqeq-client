@@ -16,13 +16,13 @@ import VideosPage from './pages/Videos';
 import BlogPage from './pages/Blog';
 import ReleaseDetailsPage from './pages/ReleaseDetails';
 import PodcastDetailsPage from './pages/PodcastDetails';
-import EpisodeDetails from './pages/VideoDetails';
 import BlogPostPage from './pages/BlogDetails';
 import ContactUsPage from './pages/ContactUs';
 import JoinPage from './pages/Join';
 import BlogCategoryPage from './pages/BlogCategory';
 import VideoDetailsPage from './pages/VideoDetails';
 import VideoCategoryPage from './pages/videoCategory';
+import EpisodeDetailsPage from './pages/EpisodeDetails';
 
 const router = createBrowserRouter([
   {
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             path: '/البودكاست',
             children: [
               { index: true, element: <PodcastsPage /> },
-              { path: 'الحلقات', children: [{ path: ':id', element: <EpisodeDetails /> }] },
+              { path: 'الحلقات', children: [{ path: ':id', element: <EpisodeDetailsPage /> }] },
               { path: ':id', element: <PodcastDetailsPage /> }
             ]
           },

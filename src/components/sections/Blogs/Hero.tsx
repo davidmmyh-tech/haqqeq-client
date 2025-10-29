@@ -25,7 +25,10 @@ export default function BlogsHeroSection({ heroBlog }: { heroBlog: Blog }) {
         <p className="text-muted mb-4 xl:me-18">{heroBlog.description.slice(0, 200)}</p>
 
         <p className="inline-block">
-          في <span className="font-bold">{heroBlog.category}</span>
+          في{' '}
+          <Link to={`/الفيديوهات/تصنيفات/${heroBlog.category}`} className="font-bold">
+            {heroBlog.category}
+          </Link>
         </p>
         <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog.publish_date)}</p>
 

@@ -10,7 +10,7 @@ import { getPodcastDetails } from '@/services/getPodcasts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useParams } from 'react-router';
-
+//TODO: Change API
 const PAGE_LIMIT = 6;
 
 export default function PodcastDetailsPage() {
@@ -21,7 +21,7 @@ export default function PodcastDetailsPage() {
       queryKey: [PODCAST_QUERY_KEY, id],
       queryFn: ({ pageParam }) => getPodcastDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.episodes.length < PAGE_LIMIT) return undefined;
+        if (lastPage.pagination.total / PAGE_LIMIT <= allPages.length) return undefined;
         return allPages.length + 1;
       },
       initialPageParam: 1
@@ -29,7 +29,7 @@ export default function PodcastDetailsPage() {
 
   const episodes = data?.pages?.flatMap((p: any) => p.episodes ?? p.data ?? []) ?? [];
   const podcast = data?.pages?.[0].podcast ?? null;
-  const totalEpisodes = data?.pages?.[0].episode_count ?? 0;
+  const totalEpisodes = data?.pages?.[0].pagination.total ?? 0;
 
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();

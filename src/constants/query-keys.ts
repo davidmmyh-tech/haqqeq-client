@@ -15,5 +15,6 @@ export const EPISODE_QUERY_KEY = 'episode';
 
 export const VIDEO_CATEGORY_QUERY_KEY = 'video-category';
 export const BLOG_CATEGORY_QUERY_KEY = 'blog-category';
+export const MORE_RELEASES_QUERY_KEY = 'more-releases';
 
-export const INFINIT_QUERY_KEY = 'infint';
+export const INFINITE_QUERY_KEY = 'infinite';

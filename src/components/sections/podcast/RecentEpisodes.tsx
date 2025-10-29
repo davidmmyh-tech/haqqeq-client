@@ -9,7 +9,7 @@ export default function RecentEpisodesSection({ episodes }: { episodes: Episode[
           key={ep.id}
           id={ep.id}
           imageSrc={ep.cover_image}
-          category={ep.title}
+          category={ep.podcast?.title || ''}
           description={ep.description}
           title={ep.title}
           publishDate={ep.created_at}
