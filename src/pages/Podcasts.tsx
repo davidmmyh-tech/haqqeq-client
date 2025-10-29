@@ -26,7 +26,7 @@ export default function PodcastsPage() {
       <header className="container space-y-8">
         <SectionHeader icon={podcast} title="البودكـــــاست" />
         <DataWrapper isError={isError} isPending={isPending} retry={refetch} isRefetching={isFetching} isEmpty={!hero}>
-          <PodcastsHeroSection heroPodcast={hero} />
+          <PodcastsHeroSection heroEpisode={hero} />
         </DataWrapper>
       </header>
 
