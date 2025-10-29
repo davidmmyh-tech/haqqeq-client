@@ -2,26 +2,26 @@ import type { Release } from '@/schemas/types';
 import api from './api';
 
 type ReleasesResponse = {
-  current_page: 1;
+  current_page: number;
   data: Release[];
-  from: 1;
-  last_page: 1;
+  from: number;
+  last_page: number;
   links: [
     {
-      url: null;
-      label: '&laquo; Previous';
-      page: null;
-      active: false;
+      url: string | null;
+      label: string;
+      page: string | null;
+      active: boolean;
     }
   ];
-  next_page_url: null;
-  per_page: 11;
-  prev_page_url: null;
-  to: 5;
-  total: 5;
+  next_page_url: string;
+  per_page: number;
+  prev_page_url: string;
+  to: number;
+  total: number;
 };
 
-export async function getReleases({ page, limit = 5 }: { page: number; limit?: number }) {
+export async function getReleases({ page, limit = 5 }: { page: number; limit: number }) {
   return api.get<ReleasesResponse>('/api/releases', { params: { page, limit } }).then((res) => res.data.data);
 }
 
