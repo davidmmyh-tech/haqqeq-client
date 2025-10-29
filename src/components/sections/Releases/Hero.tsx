@@ -6,9 +6,27 @@ import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
 import usePrefetchRelease from '@/hooks/queries/prefetch/usePrefetchRelease';
 import type { Release } from '@/schemas/types';
+import { DownloadRelease } from '@/services/DownloadRelease';
+import { toast } from 'react-toastify';
+import { useCallback, useState } from 'react';
+import SubmitButton from '@/components/ui/submit-button';
 
 export default function ReleasesHeroSection({ heroRelease }: { heroRelease: Release }) {
   const { handlePrefetchRelease } = usePrefetchRelease();
+  const [busy, setBusy] = useState(false);
+
+  const handleDownload = useCallback(
+    async (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (!heroRelease.file_url) return;
+      setBusy(true);
+      await DownloadRelease(heroRelease.file_url, `${heroRelease.title}.pdf`, false).catch(() =>
+        toast.error('حدث خطأ أثناء التحميل. حاول مرة أخرى لاحقاً.')
+      );
+      setBusy(false);
+    },
+    [heroRelease.file_url, heroRelease.title]
+  );
 
   return (
     <DefaultMotionDiv
@@ -37,7 +55,15 @@ export default function ReleasesHeroSection({ heroRelease }: { heroRelease: Rele
 
         <ViewsBadge views={0} />
 
-        <Button className="me-4 h-11 w-36 text-3xl">تحميــــل</Button>
+        <SubmitButton
+          isLoading={busy}
+          onClick={handleDownload}
+          className="me-4 h-11 w-32 text-3xl"
+          disabled={busy}
+          aria-busy={busy}
+        >
+          تحميــــل
+        </SubmitButton>
         <Button
           variant="link"
           className="border-foreground text-foreground h-11 w-36 border-2 bg-transparent text-3xl hover:no-underline"

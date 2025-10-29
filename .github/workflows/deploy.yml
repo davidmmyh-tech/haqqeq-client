@@ -55,12 +55,12 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 65002
-          source: "dist/*"
+          source: "dist/*,public/.htaccess" # Include .htaccess from public folder
           target: "/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com/public_html"
           strip_components: 1
           debug: true
-          timeout: 60s # Add longer timeout
-          command_timeout: 20m # Add command timeout
+          timeout: 60s
+          command_timeout: 20m
 
       - name: Activate release (atomic swap)
         uses: appleboy/ssh-action@v1.0.3
@@ -72,6 +72,11 @@ jobs:
           script: |
             set -euo pipefail
             BUILD_DIR="/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com"
+
+            # Ensure .htaccess exists and has correct permissions
+            if [ -f "$BUILD_DIR/public_html/.htaccess" ]; then
+              chmod 644 "$BUILD_DIR/public_html/.htaccess"
+            fi
 
             # Create directories if they don't exist
             mkdir -p $BUILD_DIR/public_html_tmp
