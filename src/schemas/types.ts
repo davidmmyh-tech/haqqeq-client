@@ -73,6 +73,16 @@ export interface Blog {
   description: string;
   announcement: string;
 }
+export interface BlogCategory {
+  id: number;
+  name: string;
+  slug: string;
+  image: string;
+  description: string;
+  blogs_count: number;
+  created_at: string;
+  updated_at: string;
+}
 
 export interface Release {
   id: number;

@@ -1,12 +1,12 @@
 import SquareImage from '@/components/cards/SquareImage';
 import usePrefetchBlog from '@/hooks/queries/prefetch/usePrefetchBlog';
 import DataWrapper from '@/layouts/DataWrapper';
-import { getBlogs } from '@/services/getBlogs';
+import { getBlogsCategories } from '@/services/getBlogs';
 import { useQuery } from '@tanstack/react-query';
 import { useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-export default function StarBlogsSection() {
+export default function StarBlogsCategorySection() {
   const { handlePrefetchBlog } = usePrefetchBlog();
   const userViewed = useRef(false);
   const { ref } = useInView({
@@ -17,11 +17,11 @@ export default function StarBlogsSection() {
 
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ['special-blogs'],
-    queryFn: () => getBlogs({ page: 1 }),
+    queryFn: () => getBlogsCategories({ page: 1, limit: 5 }),
     enabled: userViewed.current
   });
 
-  const blogs = data ? data.data.slice(0, 5) : [];
+  const categories = data || [];
 
   return (
     <div ref={ref}>
@@ -30,16 +30,16 @@ export default function StarBlogsSection() {
         isPending={isPending}
         retry={refetch}
         isRefetching={isFetching}
-        isEmpty={!blogs.length}
+        isEmpty={!categories.length}
       >
         <div className="mx-auto grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
-          {blogs.map((blog) => (
+          {categories.map((category) => (
             <SquareImage
-              key={blog.id}
-              src={blog.image}
-              alt={blog.title}
-              to={`/المدونة/${blog.id}`}
-              onMouseEnter={() => handlePrefetchBlog(blog.id)}
+              key={category.id}
+              src={category.image}
+              alt={category.name}
+              to={`/المدونة/${category.id}`}
+              onMouseEnter={() => handlePrefetchBlog(category.id)}
             />
           ))}
         </div>
