@@ -12,5 +12,14 @@ export default defineConfig({
   },
   server: {
     port: 3000
+  },
+  build: {
+    // ...existing code...
+    rollupOptions: {
+      input: {
+        main: 'index.html'
+      }
+    },
+    copyPublicDir: true // This ensures .htaccess is copied
   }
 });
