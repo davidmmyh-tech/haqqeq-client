@@ -27,6 +27,7 @@ export function formatDuration(sec: number | null) {
 }
 
 export function remote(route: string) {
+  if (route.includes('://')) return route;
   return `${BASE_URL}/${route}`;
 }
 

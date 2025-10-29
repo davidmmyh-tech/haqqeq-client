@@ -12,13 +12,24 @@ export type DetailedCardProps = {
   imageSrc: string | null;
   publishDate: string;
   category: string;
+  categoryTo: string;
   soundTrackSrc?: string | null;
   views?: number;
   to: string;
 };
 
 const DetailedCard = memo(
-  ({ soundTrackSrc, title, description, imageSrc, publishDate, category, views, to }: DetailedCardProps) => {
+  ({
+    soundTrackSrc,
+    title,
+    description,
+    imageSrc,
+    publishDate,
+    category,
+    views,
+    to,
+    categoryTo
+  }: DetailedCardProps) => {
     return (
       <DefaultMotionDiv delay={0.2} className="flex flex-col items-start sm:flex-row">
         <SquareImage className="w-auto shrink-0 sm:w-48" src={imageSrc || ''} alt={title} to={to} />
@@ -31,7 +42,10 @@ const DetailedCard = memo(
 
           <p className="inline-block">
             في
-            <span className="font-bold"> {category}</span>
+            <Link to={categoryTo} className="font-bold">
+              {' '}
+              {category}
+            </Link>
             <span className="text-muted ms-3 inline-block text-sm"> {parsedDate(publishDate)}</span>
           </p>
 

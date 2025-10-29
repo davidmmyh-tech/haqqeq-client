@@ -11,8 +11,9 @@ export default function NewBlogPostsSection({ blogs }: { blogs: Blog[] }) {
           imageSrc={post.image}
           title={post.title}
           description={post.description.slice(0, 150) + '...'}
-          category={post.category}
-          publishDate={post.publish_date}
+          category={post.category.name}
+          categoryId={post.category.id}
+          publishDate={post.publish_date || post.created_at}
         />
       ))}
     </div>

@@ -9,7 +9,8 @@ export default function MainBlogsSection({ blogs }: { blogs: Blog[] }) {
           id={blog.id}
           key={blog.id}
           imageSrc={blog.image}
-          category={blog.category}
+          category={blog.category.name}
+          categoryId={blog.category.id}
           description={blog.description}
           title={blog.title}
           publishDate={blog.created_at}

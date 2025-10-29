@@ -10,6 +10,7 @@ export default function MoreEpisodesSection({ episodes }: { episodes: Episode[] 
           id={ep.id}
           imageSrc={ep.cover_image}
           category={ep.podcast?.title || ''}
+          categoryId={ep.podcast?.id || ''}
           description={ep.description}
           title={ep.title}
           publishDate={ep.created_at}

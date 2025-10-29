@@ -1,5 +1,5 @@
 import SquareImage from '@/components/cards/SquareImage';
-import usePrefetchBlog from '@/hooks/queries/prefetch/usePrefetchBlog';
+import usePrefetchBlogCategory from '@/hooks/queries/prefetch/usePrefetchBlogCategory';
 import DataWrapper from '@/layouts/DataWrapper';
 import { getBlogsCategories } from '@/services/getBlogs';
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 export default function StarBlogsCategorySection() {
-  const { handlePrefetchBlog } = usePrefetchBlog();
+  const { handlePrefetchBlogCategory } = usePrefetchBlogCategory();
   const userViewed = useRef(false);
   const { ref } = useInView({
     onChange: (inView) => {
@@ -16,7 +16,7 @@ export default function StarBlogsCategorySection() {
   });
 
   const { data, isPending, isError, refetch, isFetching } = useQuery({
-    queryKey: ['special-blogs'],
+    queryKey: ['star-blog-categories'],
     queryFn: () => getBlogsCategories({ page: 1, limit: 5 }),
     enabled: userViewed.current
   });
@@ -38,8 +38,8 @@ export default function StarBlogsCategorySection() {
               key={category.id}
               src={category.image}
               alt={category.name}
-              to={`/المدونة/${category.id}`}
-              onMouseEnter={() => handlePrefetchBlog(category.id)}
+              to={`/المدونة/تصنيف/${category.id}`}
+              onMouseEnter={() => handlePrefetchBlogCategory(category.id)}
             />
           ))}
         </div>

@@ -34,7 +34,10 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
           <p className="text-muted mb-10">{heroBlog?.description.slice(0, 200)}...</p>
           <ViewsBadge views={heroBlog?.views || 0} />
           <p>
-            في <span className="font-bold">{heroBlog?.category}</span>
+            في{' '}
+            <Link to={`/المدونة/تصنيف/${heroBlog?.category.id}`} className="font-bold">
+              {heroBlog?.category.name}
+            </Link>
             <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog?.created_at || '')}</span>
           </p>
         </div>
@@ -50,7 +53,8 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
                 title={blog.title}
                 imageSrc={blog.image}
                 publishDate={blog.created_at}
-                category={blog.category}
+                category={blog.category.name}
+                categoryId={blog.category.id}
               />
             </div>
           ))}

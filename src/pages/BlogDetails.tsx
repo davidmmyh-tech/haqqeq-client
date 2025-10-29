@@ -1,27 +1,35 @@
 import { release } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
-// import MoreBlogsSection from '@/components/sections/Blogs/MoreBlogs';
 import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
-import { getBlogDetails } from '@/services/getBlogs';
+import { getBlogDetails, getBlogsCategoryDetails } from '@/services/getBlogs';
 import DataWrapper from '@/layouts/DataWrapper';
 import NewsLetter from '@/components/sections/NewsLetter';
 import DOMPurify from 'dompurify';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { PencilLine } from 'lucide-react';
-import { BLOG_QUERY_KEY } from '@/constants/query-keys';
-//TODO: Add more blogs API
+import { BLOG_CATEGORY_QUERY_KEY, BLOG_QUERY_KEY } from '@/constants/query-keys';
+import MoreBlogsSection from '@/components/sections/Blogs/MoreBlogs';
+
 export default function BlogDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 
-  const { data, isError, isPending, refetch, isFetching } = useQuery({
+  const { data, isError, isPending, refetch, isFetching, isFetched } = useQuery({
     queryKey: [BLOG_QUERY_KEY, id],
     queryFn: () => getBlogDetails(id),
     throwOnError: true,
     retry: 0
   });
+
+  const relatedBlogsQuery = useQuery({
+    queryKey: [BLOG_CATEGORY_QUERY_KEY, `${data?.category_id}`],
+    queryFn: () => getBlogsCategoryDetails(data?.category_id || '', { page: 1, limit: 8 }),
+    enabled: !!data?.category_id && isFetched
+  });
+  const relatedBlogs = relatedBlogsQuery.data?.blogs || [];
+  const category = relatedBlogsQuery.data?.category;
 
   return (
     <DataWrapper
@@ -52,7 +60,11 @@ export default function BlogDetailsPage() {
           </DefaultMotionElement>
         </header>
 
-        {data?.header_image && <Img src={data.header_image} alt={data.announcement} />}
+        {data?.header_image && (
+          <div className="container flex justify-center">
+            <Img src={data.header_image} alt={data.announcement} className="max-h-36 w-full rounded-lg object-cover" />
+          </div>
+        )}
 
         <section>
           <div className="container space-y-8">
@@ -70,7 +82,7 @@ export default function BlogDetailsPage() {
 
         {data?.announcement && (
           <div
-            className="mt-6 [&_a]:cursor-pointer [&_a]:text-[#902907] [&_a]:underline"
+            className="mt-6 text-center [&_a]:cursor-pointer [&_a]:text-[#902907] [&_a]:underline"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.announcement) }}
           ></div>
         )}
@@ -84,7 +96,7 @@ export default function BlogDetailsPage() {
         <section>
           <div className="container mb-12 space-y-8">
             <SectionHeader icon={release} title="المزيد من مقالات حقق" as="h4" />
-            {/* <MoreBlogsSection /> */}
+            <MoreBlogsSection blogs={relatedBlogs} defaultCategory={{ id: category?.id, name: category?.name }} />
           </div>
         </section>
       </div>

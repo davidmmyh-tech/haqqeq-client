@@ -10,7 +10,7 @@ const SquareImage = memo(({ className, to, ...props }: Props) => {
   return (
     <DefaultMotionDiv className={cn('aspect-square', className)}>
       <Link to={to}>
-        <Img {...props} className="w-full rounded-[10px]" />
+        <Img {...props} className="h-full w-full rounded-[10px] object-cover" />
       </Link>
     </DefaultMotionDiv>
   );

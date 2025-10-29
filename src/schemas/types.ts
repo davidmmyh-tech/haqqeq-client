@@ -53,7 +53,11 @@ export interface Blog {
   user_id: number;
   title: string;
   content: string;
-  category: string;
+  category: {
+    id: number | string;
+    name: string;
+  };
+  category_id: string | number;
   status: ItemStatus;
   publish_date: string;
   views: number;

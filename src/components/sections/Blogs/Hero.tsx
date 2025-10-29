@@ -5,9 +5,11 @@ import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
 import usePrefetchBlog from '@/hooks/queries/prefetch/usePrefetchBlog';
 import type { Blog } from '@/schemas/types';
+import usePrefetchBlogCategory from '@/hooks/queries/prefetch/usePrefetchBlogCategory';
 
 export default function BlogsHeroSection({ heroBlog }: { heroBlog: Blog }) {
   const { handlePrefetchBlog } = usePrefetchBlog();
+  const { handlePrefetchBlogCategory } = usePrefetchBlogCategory();
 
   return (
     <DefaultMotionDiv
@@ -26,13 +28,19 @@ export default function BlogsHeroSection({ heroBlog }: { heroBlog: Blog }) {
 
         <p className="inline-block">
           في{' '}
-          <Link to={`/الفيديوهات/تصنيفات/${heroBlog.category}`} className="font-bold">
-            {heroBlog.category}
+          <Link
+            onMouseEnter={() => handlePrefetchBlogCategory(heroBlog.category.id)}
+            to={`/المدونة/تصنيف/${heroBlog.category.id}`}
+            className="font-bold"
+          >
+            {heroBlog.category.name}
           </Link>
         </p>
-        <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog.publish_date)}</p>
+        <p className="text-muted ms-3 inline-block text-sm">
+          {parsedDate(heroBlog.publish_date || heroBlog.created_at)}
+        </p>
 
-        <ViewsBadge views={heroBlog.views || 0} />
+        <ViewsBadge views={heroBlog.views} />
       </div>
     </DefaultMotionDiv>
   );

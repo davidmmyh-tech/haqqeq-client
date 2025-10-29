@@ -15,8 +15,8 @@ export default function PodcastsPage() {
     queryKey: [PODCASTS_PAGE_EPISODES_QUERY_KEY],
     queryFn: () => getEpisodes({ page: 1, limit: 15 })
   });
-  const episodes = data ? [...data.data] : [];
-  const hero = episodes.splice(0, 1)[0];
+  const episodes = data ? [...data] : [];
+  const hero = episodes.shift();
   const moreEpisodes = episodes.splice(0, 4);
 
   return (
@@ -26,7 +26,7 @@ export default function PodcastsPage() {
       <header className="container space-y-8">
         <SectionHeader icon={podcast} title="البودكـــــاست" />
         <DataWrapper isError={isError} isPending={isPending} retry={refetch} isRefetching={isFetching} isEmpty={!hero}>
-          <PodcastsHeroSection heroEpisode={hero} />
+          {hero && <PodcastsHeroSection heroEpisode={hero} />}
         </DataWrapper>
       </header>
 
@@ -37,7 +37,7 @@ export default function PodcastsPage() {
             isPending={isPending}
             retry={refetch}
             isRefetching={isFetching}
-            isEmpty={!episodes.length}
+            isEmpty={!moreEpisodes.length}
           >
             <MainPodcastsSection episodes={moreEpisodes} />
           </DataWrapper>

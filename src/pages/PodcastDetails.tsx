@@ -18,7 +18,7 @@ export default function PodcastDetailsPage() {
 
   const { data, isError, isLoading, refetch, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [PODCAST_QUERY_KEY, INFINITE_QUERY_KEY, id],
+      queryKey: [INFINITE_QUERY_KEY, PODCAST_QUERY_KEY, `${id}`],
       queryFn: ({ pageParam }) => getPodcastDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
         if (lastPage.pagination.total / PAGE_LIMIT <= allPages.length) return undefined;

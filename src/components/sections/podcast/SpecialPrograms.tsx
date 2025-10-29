@@ -1,6 +1,6 @@
 import SquareImage from '@/components/cards/SquareImage';
 import { Button } from '@/components/ui/button';
-import usePrefetchVideo from '@/hooks/queries/prefetch/usePrefetchVideo';
+import usePrefetchPodcast from '@/hooks/queries/prefetch/usePrefetchPodcast';
 import DataWrapper from '@/layouts/DataWrapper';
 import getPodcasts from '@/services/getPodcasts';
 import { useQuery } from '@tanstack/react-query';
@@ -16,10 +16,10 @@ export default function SpecialProgramsSection() {
     }
   });
 
-  const { handlePrefetchVideo } = usePrefetchVideo();
+  const { handlePrefetchPodcast } = usePrefetchPodcast();
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ['special-programs'],
-    queryFn: () => getPodcasts({ page: 1, limit: 20 }),
+    queryFn: () => getPodcasts({ page: 1, limit: 5 }),
     enabled: userViewed.current
   });
 
@@ -53,7 +53,7 @@ export default function SpecialProgramsSection() {
               src={podcast.cover_image}
               alt={podcast.title}
               to={`/البودكاست/${podcast?.id}`}
-              onMouseEnter={() => handlePrefetchVideo(podcast.id)}
+              onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
             />
           ))}
         </div>
@@ -65,7 +65,7 @@ export default function SpecialProgramsSection() {
                 src={podcast.cover_image}
                 alt={podcast.title}
                 to={`/البودكاست/${podcast?.id}`}
-                onMouseEnter={() => handlePrefetchVideo(podcast.id)}
+                onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
               />
             ))}
           </div>
