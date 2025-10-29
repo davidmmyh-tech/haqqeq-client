@@ -36,7 +36,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist
+          path: |
+            dist
+            public/.htaccess
 
   deploy:
     needs: build
@@ -46,7 +48,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist
+          path: deploy
 
       - name: Copy dist to server
         uses: appleboy/scp-action@v0.1.7
@@ -55,7 +57,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 65002
-          source: "dist/*,.htaccess,public/.htaccess"
+          source: "deploy/*"
           target: "/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com/public_html"
           strip_components: 1
           debug: true
@@ -72,11 +74,6 @@ jobs:
           script: |
             set -euo pipefail
             BUILD_DIR="/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com"
-
-            # Ensure .htaccess exists and has correct permissions
-            if [ -f "$BUILD_DIR/public_html/.htaccess" ]; then
-              chmod 644 "$BUILD_DIR/public_html/.htaccess"
-            fi
 
             # Create directories if they don't exist
             mkdir -p $BUILD_DIR/public_html_tmp
