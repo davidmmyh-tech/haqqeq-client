@@ -45,8 +45,14 @@ export default function SearchBar() {
         )}
         placeholder="بحث"
         dir="ltr"
-        onFocus={() => setShowData(true)}
-        onBlur={() => setShowData(false)}
+        onFocus={() => {
+          setShowData(true);
+          document.body.classList.add('overflow-hidden');
+        }}
+        onBlur={() => {
+          document.body.classList.remove('overflow-hidden');
+          setShowData(false);
+        }}
         onChange={handleOnChange}
         autoComplete="off"
       />
@@ -60,7 +66,7 @@ export default function SearchBar() {
         {showData && (
           <motion.div
             key="dropdown"
-            className="absolute end-0 top-10 w-2xs overflow-clip rounded-2xl border bg-white shadow-lg"
+            className="absolute end-0 top-10 max-h-80 w-2xs overflow-auto rounded-sm border bg-white shadow-lg"
             variants={variants}
             initial="hidden"
             animate="visible"
@@ -90,7 +96,13 @@ export default function SearchBar() {
               ))}
 
               {results?.episodes?.data.map((ep) => (
-                <SearchItem key={ep.id} imageUrl={ep.cover_image} name={ep.title} type="إصدار" to={`/حلقات/${ep.id}`} />
+                <SearchItem
+                  key={ep.id}
+                  imageUrl={ep.cover_image}
+                  name={ep.title}
+                  type="حلقة"
+                  to={`/الحلقات/${ep.id}`}
+                />
               ))}
 
               {results?.podcasts?.data.map((podcast) => (
