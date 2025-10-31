@@ -101,7 +101,7 @@ export default function SearchBar() {
                   imageUrl={ep.cover_image}
                   name={ep.title}
                   type="حلقة"
-                  to={`/الحلقات/${ep.id}`}
+                  to={`/البودكاست/الحلقات/${ep.id}`}
                 />
               ))}
 
