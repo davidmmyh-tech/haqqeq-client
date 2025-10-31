@@ -13,7 +13,7 @@ export default function VideosPage() {
     queryKey: [VIDEOS_PAGE_QUERY_KEY],
     queryFn: () => getVideos({ page: 1, limit: 14 })
   });
-  const videos = data?.data ? [...data.data] : [];
+  const videos = data?.data.data ? [...data.data.data] : [];
 
   return (
     <div className="mt-8 mb-28 space-y-12">
@@ -26,7 +26,7 @@ export default function VideosPage() {
           isPending={isPending}
           retry={refetch}
           isRefetching={isFetching}
-          isEmpty={!videos[0]}
+          isEmpty={!videos.length}
         >
           <VideosHeroSection heroVideo={videos.splice(0, 1)[0]} moreVideos={videos.splice(0, 3)} />
         </DataWrapper>

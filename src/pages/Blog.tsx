@@ -1,7 +1,7 @@
 import BlogsHeroSection from '@/components/sections/Blogs/Hero';
 import MainBlogsSection from '@/components/sections/Blogs/MainBlogs';
 import MoreBlogsSection from '@/components/sections/Blogs/MoreBlogs';
-import StarBlogsSection from '@/components/sections/Blogs/StarBlogsCategory';
+import StarBlogsCategorySection from '@/components/sections/Blogs/StarBlogsCategory';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { blog as blogIcon, star } from '@/assets/images';
 import HSplit from '@/components/ui/h-split';
@@ -49,8 +49,8 @@ export default function BlogPage() {
       </section>
 
       <section className="container space-y-12">
-        <SectionHeader icon={star} moreUrl="/الفديوهات" title="نشرات متميزة" as="h2" />
-        <StarBlogsSection />
+        <SectionHeader icon={star} title="نشرات متميزة" as="h2" />
+        <StarBlogsCategorySection />
         <HSplit className="border-t-[#989696CC]" />
       </section>
 

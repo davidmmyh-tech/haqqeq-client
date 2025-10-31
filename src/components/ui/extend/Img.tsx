@@ -11,9 +11,16 @@ export type CustomeImgProps = {
 export default function Img({ src, alt, className, ...props }: CustomeImgProps) {
   const [error, setError] = useState(false);
 
-  if (!src || error) {
-    return <img src={fallbackImage} alt={alt ?? ''} className={className} {...props} />;
-  }
+  if (!src || error) return <img src={fallbackImage} alt={alt ?? ''} className={className} loading="lazy" {...props} />;
 
-  return <img src={remote(src)} alt={alt ?? ''} className={className} onError={() => setError(true)} {...props} />;
+  return (
+    <img
+      src={remote(src)}
+      alt={alt ?? ''}
+      className={className}
+      onError={() => setError(true)}
+      loading="lazy"
+      {...props}
+    />
+  );
 }

@@ -1,31 +1,31 @@
 import SquareImage from '@/components/cards/SquareImage';
 import { Button } from '@/components/ui/button';
-import usePrefetchPodcast from '@/hooks/queries/prefetch/usePrefetchPodcast';
+import usePrefetchVideoCategoryDetails from '@/hooks/queries/prefetch/usePrefetchVideoCategoryDetails';
 import DataWrapper from '@/layouts/DataWrapper';
-import getPodcasts from '@/services/getPodcasts';
+import { getVideosCategories } from '@/services/getVideos';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-export default function SpecialProgramsSection() {
+export default function SpecialVideoProgramsSection() {
   const [more, setMore] = useState(false);
-  const { handlePrefetchPodcast } = usePrefetchPodcast();
+  const { handlePrefetchVideoCategory } = usePrefetchVideoCategoryDetails();
 
   const { data, isPending, isError, refetch, isFetching } = useQuery({
     queryKey: ['special-programs'],
-    queryFn: () => getPodcasts({ page: 1, limit: 15 })
+    queryFn: () => getVideosCategories({ page: 1, limit: 15 })
   });
 
-  const podcasts = data ? [...data.data] : [];
-  const mainPodcasts = podcasts.splice(0, 5);
+  const categories = data ? [...data.data] : [];
+  const mainCategories = categories.splice(0, 5);
 
   return (
     <div className="relative">
-      {podcasts.length > 0 && (
+      {categories.length > 0 && (
         <div className="absolute end-0 -top-20">
           <Button
             variant="link"
             className="text-2xl font-medium underline"
-            onClick={() => setMore((prev) => podcasts.length > 0 && !prev)}
+            onClick={() => setMore((prev) => categories.length > 0 && !prev)}
           >
             المــــــزيد
           </Button>
@@ -40,26 +40,26 @@ export default function SpecialProgramsSection() {
         isEmpty={!data?.data.length}
       >
         <div className="mx-auto mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
-          {mainPodcasts.map((podcast) => (
+          {mainCategories.map((category) => (
             <SquareImage
-              key={podcast.id}
-              src={podcast.cover_image}
-              alt={podcast.title}
-              to={`/البودكاست/${podcast?.id}`}
-              onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
+              key={category.id}
+              src={category.image}
+              alt={category.name}
+              to={`/الفيديوهات/تصنيف/${category?.id}`}
+              onMouseEnter={() => handlePrefetchVideoCategory(category.id)}
             />
           ))}
         </div>
 
         {more && (
           <div className="mx-auto mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
-            {podcasts.map((podcast) => (
+            {categories.map((category) => (
               <SquareImage
-                key={podcast.id}
-                src={podcast.cover_image}
-                alt={podcast.title}
-                to={`/البودكاست/${podcast?.id}`}
-                onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
+                key={category.id}
+                src={category.image}
+                alt={category.name}
+                to={`/الفيديوهات/تصنيف/${category?.id}`}
+                onMouseEnter={() => handlePrefetchVideoCategory(category.id)}
               />
             ))}
           </div>

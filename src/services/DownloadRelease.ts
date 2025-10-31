@@ -3,12 +3,14 @@ import api from './api';
 export const DownloadRelease = async (url: string, fileName?: string, openInNewTab = false) => {
   try {
     const res = await api.get(url, {
+      responseType: 'blob',
       headers: {
-        credentials: 'include' // include cookies if backend uses them
+        Accept: 'application/pdf',
+        credentials: 'include'
       }
     });
 
-    const blob = await res.data.blob();
+    const blob = new Blob([res.data], { type: 'application/pdf' });
     const blobUrl = URL.createObjectURL(blob);
 
     if (openInNewTab) {
@@ -16,16 +18,15 @@ export const DownloadRelease = async (url: string, fileName?: string, openInNewT
     } else {
       const a = document.createElement('a');
       a.href = blobUrl;
-      a.download = fileName ?? '';
+      a.download = fileName || 'download.pdf';
       document.body.appendChild(a);
       a.click();
-      a.remove();
+      document.body.removeChild(a);
     }
 
-    // revoke after giving the browser time to load it
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 60 * 2000);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 2000); // Reduced timeout to 2 seconds
     return true;
   } catch {
-    throw new Error('تعزر تحميل الاصدار. حاول مرة أخرى لاحقاً.');
+    throw new Error('تعذر تحميل الإصدار. حاول مرة أخرى لاحقاً.');
   }
 };

@@ -84,6 +84,7 @@ npm run build
 The built files will be in the `dist` directory.
 
 ## ⚙️ Helper NPM scripts
+
 The project exposes a few convenience scripts in package.json. Use these during development and CI:
 
 - npm run dev  

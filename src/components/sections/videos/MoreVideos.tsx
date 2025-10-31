@@ -11,8 +11,8 @@ export default function MoreVideosSection({ videos }: { videos: Video[] }) {
           thumbnail={video.image_path}
           title={video.title}
           description={video.description}
-          category={video.category.name}
-          categoryId={video.category.id}
+          category={video.category_name}
+          categoryId={video.category_id}
           publishDate={video.created_at}
         />
       ))}

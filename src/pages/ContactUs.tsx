@@ -1,7 +1,7 @@
 import SectionCard from '@/components/cards/SectionCard';
 import { Button } from '@/components/ui/button';
 import ErrorMessage from '@/components/ui/extend/error-message';
-import FormInput from '@/components/ui/extend/form-input';
+import FormInput from '@/components/ui/extend/FormInput';
 import { Label } from '@/components/ui/label';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';

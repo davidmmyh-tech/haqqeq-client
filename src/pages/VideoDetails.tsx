@@ -2,14 +2,14 @@ import { videos } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
 import MoreVideosSection from '@/components/sections/videos/MoreVideos';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
-import { VIDEO_CATEGORY_QUERY_KEY, VIDEO_QUERY_KEY } from '@/constants/query-keys';
+import { VIDEO_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { parsedDate, remote } from '@/lib/utils';
-import { getVideoDetails, getVideos } from '@/services/getVideos';
+import { getVideoDetails, getVideosCategoryDetails } from '@/services/getVideos';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
-//TODO: Add more Related videos API
+
 export default function VideoDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 
@@ -21,11 +21,11 @@ export default function VideoDetailsPage() {
   });
 
   const relatedVideosQuery = useQuery({
-    queryKey: [VIDEO_CATEGORY_QUERY_KEY, '5'],
-    queryFn: () => getVideos({ page: 1, limit: 6 }),
-    enabled: isFetched
+    queryKey: [VIDEOS_CATEGORY_QUERY_KEY, data?.category_id],
+    queryFn: () => getVideosCategoryDetails(data?.category_id || '', { page: 1, limit: 6 }),
+    enabled: !!data?.category_id && isFetched
   });
-  const relatedVideos = relatedVideosQuery.data?.data || [];
+  const relatedVideos = relatedVideosQuery.data?.data.doc_videos || [];
 
   return (
     <>

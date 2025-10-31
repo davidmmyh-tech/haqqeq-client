@@ -18,7 +18,10 @@ export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo
           <p className="text-muted mb-6">{heroVideo?.description}</p>
 
           <p className="mb-1">
-            في <span className="font-bold">{heroVideo?.category.name}</span>
+            في{' '}
+            <Link to={`/الفيديوهات/تصنيف/${heroVideo?.category_id}`} className="font-bold">
+              {heroVideo?.category_name}
+            </Link>
             <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroVideo?.created_at)}</span>
           </p>
 
@@ -45,8 +48,8 @@ export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo
           <VideoCard
             key={video.id}
             id={video.id}
-            category={video.category.name}
-            categoryId={video.category.id}
+            category={video.category_name}
+            categoryId={video.category_id}
             publishDate={video.created_at}
             thumbnail={video.image_path}
             title={video.title}

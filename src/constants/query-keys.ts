@@ -13,7 +13,7 @@ export const PODCAST_QUERY_KEY = 'podcast';
 export const VIDEO_QUERY_KEY = 'video';
 export const EPISODE_QUERY_KEY = 'episode';
 
-export const VIDEO_CATEGORY_QUERY_KEY = 'video-category';
+export const VIDEOS_CATEGORY_QUERY_KEY = 'video-category';
 export const BLOG_CATEGORY_QUERY_KEY = 'blog-category';
 export const MORE_RELEASES_QUERY_KEY = 'more-releases';
 

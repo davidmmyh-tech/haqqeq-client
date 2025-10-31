@@ -1,7 +1,7 @@
 import { blog, podcast, release, videos } from '@/assets/images';
 import HeroSection from '@/components/sections/home/Hero';
-import NewBlogPostsSection from '@/components/sections/home/NewBlogPosts';
-import NewEpisodesSection from '@/components/sections/home/NewEpisodes';
+import NewBlogPostsSection from '@/components/sections/home/BlogPosts';
+import NewEpisodesSection from '@/components/sections/home/Episodes';
 import ReleasesSection from '@/components/sections/home/Releases';
 import VideosSection from '@/components/sections/home/Videos';
 import SectionHeader from '@/components/ui/extend/SectionHeader';

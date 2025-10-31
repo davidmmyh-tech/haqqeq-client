@@ -17,7 +17,7 @@ export default function DefaultMotionElement({
   as = 'div',
   ...props
 }: Props) {
-  const lastY = useRef<number>(typeof window !== 'undefined' ? window.scrollY : 0);
+  const lastY = useRef<number>(window?.scrollY || 0);
   const [scrollingUp, setScrollingUp] = useState(false);
 
   useEffect(() => {
@@ -36,10 +36,10 @@ export default function DefaultMotionElement({
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const HeadingTag = motion[as];
+  const Tag = motion[as];
 
   return (
-    <HeadingTag
+    <Tag
       ref={ref}
       className={className}
       variants={{
@@ -49,10 +49,10 @@ export default function DefaultMotionElement({
       }}
       initial={scrollingUp ? 'hiddenDown' : 'hiddenUp'}
       whileInView="visible"
-      transition={{ duration: 0.6, delay }}
+      transition={{ duration: 0.4, delay }}
       {...props}
     >
       {children}
-    </HeadingTag>
+    </Tag>
   );
 }

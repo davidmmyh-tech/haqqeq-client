@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: ["main", "master"]
+    branches: ['main', 'master']
 
 concurrency:
   group: deploy-haqqeq
@@ -55,8 +55,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 65002
-          source: "dist/*"
-          target: "/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com/public_html"
+          source: 'dist/*'
+          target: '/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com/public_html'
           strip_components: 1
           debug: true
           timeout: 60s # Add longer timeout

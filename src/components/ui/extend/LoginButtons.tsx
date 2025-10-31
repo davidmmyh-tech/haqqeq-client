@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import ErrorMessage from './error-message';
-import FormInput from './form-input';
+import FormInput from './FormInput';
 import { useUserState } from '@/context/UserProvider';
 import { loginUser, registerUser } from '@/services/auth';
 import { setToken } from '@/lib/token';

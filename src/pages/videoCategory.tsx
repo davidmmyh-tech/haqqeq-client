@@ -1,16 +1,16 @@
-import MorePodcastsSection from '@/components/sections/podcast/MoreEpisodes';
+import MoreVideosSection from '@/components/sections/videos/MoreVideos';
 import Img from '@/components/ui/extend/Img';
 import HSplit from '@/components/ui/h-split';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
-import { INFINITE_QUERY_KEY, PODCAST_QUERY_KEY } from '@/constants/query-keys';
+import { INFINITE_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
-import { getPodcastDetails } from '@/services/getPodcasts';
+import { getVideosCategoryDetails } from '@/services/getVideos';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 import { useParams } from 'react-router';
-//TODO: Change API
+
 const PAGE_LIMIT = 6;
 
 export default function VideoCategoryPage() {
@@ -18,18 +18,24 @@ export default function VideoCategoryPage() {
 
   const { data, isError, isLoading, refetch, isFetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: [PODCAST_QUERY_KEY, INFINITE_QUERY_KEY, id],
-      queryFn: ({ pageParam }) => getPodcastDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
+      queryKey: [INFINITE_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY, `${id}`],
+      queryFn: ({ pageParam }) => getVideosCategoryDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.pagination.total / PAGE_LIMIT <= allPages.length) return undefined;
+        if (lastPage.data.doc_videos.length < PAGE_LIMIT) return undefined;
         return allPages.length + 1;
       },
-      initialPageParam: 1
+      initialPageParam: 1,
+      throwOnError: true
     });
 
-  const episodes = data?.pages?.flatMap((p: any) => p.episodes ?? p.data ?? []) ?? [];
-  const podcast = data?.pages?.[0].podcast ?? null;
-  const totalEpisodes = data?.pages?.[0].pagination.total ?? 0;
+  const videos = data?.pages?.flatMap((p) => p.data.doc_videos ?? []) ?? [];
+  const category = {
+    id: data?.pages?.[0]?.data.id,
+    name: data?.pages?.[0]?.data.name,
+    description: '',
+    image: ''
+  };
+  const totalEpisodes = null;
 
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -37,24 +43,24 @@ export default function VideoCategoryPage() {
 
   return (
     <DataWrapper isError={isError} isPending={isLoading} retry={refetch} isRefetching={isFetching} isEmpty={!data}>
-      <title>{podcast?.title} - حقق</title>
+      <title>{category?.name} - حقق</title>
 
       <div className="container my-8 space-y-10">
         <DefaultMotionElement as="header" className="flex flex-col gap-2 sm:flex-row">
           <Img
-            src={podcast?.cover_image}
-            alt={podcast?.title}
+            src={category?.image}
+            alt={category?.name}
             className="aspect-video w-full shrink-0 rounded-xl object-cover sm:w-44"
           />
           <div className="space-y-2">
-            <h1 className="mb-4 text-[28px] font-medium">{podcast?.title}</h1>
+            <h1 className="mb-4 text-[28px] font-medium">{category?.name}</h1>
             <p className="text-muted flex items-center gap-2 text-sm">
               <span>من</span>
               <span>
                 <Logo className="w-8" />
               </span>
             </p>
-            <p className="text-muted mb-4 pe-14">{podcast?.description?.slice(0, 100)}...</p>
+            <p className="text-muted mb-4 pe-14">{category?.description?.slice(0, 100)}...</p>
           </div>
         </DefaultMotionElement>
 
@@ -65,7 +71,7 @@ export default function VideoCategoryPage() {
           <p>مرتب حسب الأحدث</p>
         </div>
 
-        <MorePodcastsSection episodes={episodes} />
+        <MoreVideosSection videos={videos} />
 
         {hasNextPage && (
           <SubmitButton isLoading={isFetching} className="mx-auto flex px-10" onClick={() => loadMore()}>

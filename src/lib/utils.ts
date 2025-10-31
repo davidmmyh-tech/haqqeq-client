@@ -26,9 +26,9 @@ export function formatDuration(sec: number | null) {
   return `${mm}:${ss}`;
 }
 
-export function remote(route: string) {
-  if (route.includes('://')) return route;
-  return `${BASE_URL}/${route}`;
+export function remote(path: string | null | undefined) {
+  if (path && path.includes('://')) return path;
+  return `${BASE_URL}/${path}`;
 }
 
 export function isHere(to: string, location: string) {

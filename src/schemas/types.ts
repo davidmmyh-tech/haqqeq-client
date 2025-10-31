@@ -15,7 +15,7 @@ export interface Podcast {
   description: string;
   language: 'ar' | 'en';
   website_url: string | null;
-  cover_image: string | null;
+  cover_image: string;
   rss_url: string | null;
   episodes: Episode[];
   created_at: string;
@@ -114,13 +114,15 @@ export interface Video {
   id: number;
   title: string;
   description: string;
-  views_count: number;
-  image_path: string;
+  views_count: string;
   video_path: string;
+  image_path: string;
   created_at: string;
-  updated_at: string;
-  category: {
-    id: number | string;
-    name: string;
-  };
+  category_id: string;
+  category_name: string;
+}
+
+export interface Params {
+  page?: number;
+  limit?: number;
 }

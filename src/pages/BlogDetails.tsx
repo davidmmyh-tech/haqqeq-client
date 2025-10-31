@@ -7,11 +7,11 @@ import { useParams } from 'react-router';
 import { getBlogDetails, getBlogsCategoryDetails } from '@/services/getBlogs';
 import DataWrapper from '@/layouts/DataWrapper';
 import NewsLetter from '@/components/sections/NewsLetter';
-import DOMPurify from 'dompurify';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { PencilLine } from 'lucide-react';
 import { BLOG_CATEGORY_QUERY_KEY, BLOG_QUERY_KEY } from '@/constants/query-keys';
 import MoreBlogsSection from '@/components/sections/Blogs/MoreBlogs';
+import InnerHTML from '@/components/ui/extend/InnerHTML';
 
 export default function BlogDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
@@ -71,21 +71,13 @@ export default function BlogDetailsPage() {
             <SectionHeader icon={release} title="المقالة" as="h3" />
             <DefaultMotionElement>
               <SectionCard>
-                <div
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data?.content || '') }}
-                  className="mt-4 text-xl"
-                ></div>
+                <InnerHTML content={data?.content || ''} />
               </SectionCard>
             </DefaultMotionElement>
           </div>
         </section>
 
-        {data?.announcement && (
-          <div
-            className="mt-6 text-center [&_a]:cursor-pointer [&_a]:text-[#902907] [&_a]:underline"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.announcement) }}
-          ></div>
-        )}
+        {data?.announcement && <InnerHTML content={data.announcement} />}
 
         <section>
           <div className="container">

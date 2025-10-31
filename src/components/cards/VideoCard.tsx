@@ -18,7 +18,7 @@ type Props = {
 
 const VideoCard = memo(({ thumbnail, category, publishDate, title, description, id, categoryId }: Props) => {
   const { handlePrefetchVideo } = usePrefetchVideo();
-  const isWide = description || description === null;
+  const isWide = description || description === null || description === '';
 
   return (
     <DefaultMotionDiv
@@ -27,7 +27,7 @@ const VideoCard = memo(({ thumbnail, category, publishDate, title, description, 
       onMouseEnter={() => handlePrefetchVideo(id)}
     >
       <Link
-        to={`/الحلقات/${id}`}
+        to={`/الفيديوهات/${id}`}
         className={cn('relative block aspect-video w-full shrink-0', isWide ? 'sm:w-64' : '')}
       >
         <div className="absolute inset-0 flex items-center justify-center">
@@ -38,10 +38,9 @@ const VideoCard = memo(({ thumbnail, category, publishDate, title, description, 
       <div className="px-2">
         <p className="mt-4 text-xl font-medium">{title}</p>
         <p className="mt-2">
-          {category && 'في'}
+          {category && ' في'}
           <Link to={`/الفيديوهات/تصنيفات/${categoryId}`} className="font-bold">
-            {' '}
-            {category || 'أخري'}
+            {category}
           </Link>
           <span className="text-muted ms-3 inline-block text-sm"> {parsedDate(publishDate)}</span>
         </p>

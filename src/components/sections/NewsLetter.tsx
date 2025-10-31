@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import SectionCard from '../cards/SectionCard';
-import FormInput from '../ui/extend/form-input';
+import FormInput from '../ui/extend/FormInput';
 import Logo from '../ui/logo';
 import SubmitButton from '../ui/submit-button';
 import { subscribeSchema, type SubscribeForm } from '@/schemas/validation';
