@@ -60,7 +60,7 @@ export async function getVideoDetails(id: string | number) {
 }
 
 export async function getVideosCategories(params?: { limit: number; page: number }) {
-  return api.get<VideosCategoriesResponse>(`/api/categories/docvideo`, { params }).then((res) => res.data);
+  return api.get<VideosCategoriesResponse>(`/api/categories/docvideos`, { params }).then((res) => res.data);
 }
 
 export async function getVideosCategoryDetails(id: string | number, params?: { limit: number; page: number }) {

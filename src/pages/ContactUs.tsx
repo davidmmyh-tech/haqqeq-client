@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
 import { Textarea } from '@/components/ui/textarea';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import { contactSchema, type ContactForm } from '@/schemas/validation';
 import { contact } from '@/services/subscribe';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,10 +42,15 @@ export default function ContactUsPage() {
 
   const submitForm = handleSubmit((form: ContactForm) => mutate(form));
 
+  useDocumentHead({
+    title: `حقق - تواصل معنا`,
+    description: `تواصل معنا عبر ملء النموذج أدناه`,
+    ogTitle: `حقق - تواصل معنا`,
+    ogDescription: `تواصل معنا عبر ملء النموذج أدناه`
+  });
+
   return (
     <section className="container my-12 min-h-[70vh]">
-      <title>تواصل معنا - حقق</title>
-
       <form onSubmit={submitForm}>
         <SectionCard className="mx-auto max-w-3xl">
           {messageState ? (

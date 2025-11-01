@@ -6,6 +6,7 @@ import { getReleases } from '@/services/getReleases';
 import { RELEASES_PAGE_QUERY_KEY } from '@/constants/query-keys';
 import { useQuery } from '@tanstack/react-query';
 import DataWrapper from '@/layouts/DataWrapper';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 
 export default function ReleasesPage() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({
@@ -13,6 +14,13 @@ export default function ReleasesPage() {
     queryFn: () => getReleases({ page: 1, limit: 11 })
   });
   const releases = data ? [...data] : [];
+
+  useDocumentHead({
+    title: `حقق - إصدارات حقق`,
+    description: 'اكتشف أحدث إصدارات حقق واستمتع بالمحتوى المميز في مختلف المجالات.',
+    ogTitle: `حقق - إصدارات حقق`,
+    ogDescription: 'اكتشف أحدث إصدارات حقق واستمتع بالمحتوى المميز في مختلف المجالات.'
+  });
 
   return (
     <div className="mb-28 space-y-12">

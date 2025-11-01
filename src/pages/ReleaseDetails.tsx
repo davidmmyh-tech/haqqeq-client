@@ -1,11 +1,11 @@
 import { release } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
 import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
-// import MoreRelesesSection from '@/components/sections/Releases/MoreReleses';
 import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import SubmitButton from '@/components/ui/submit-button';
 import { MORE_RELEASES_QUERY_KEY, RELEASE_QUERY_KEY } from '@/constants/query-keys';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { DownloadRelease } from '@/services/DownloadRelease';
@@ -44,10 +44,15 @@ export default function ReleaseDetailsPage() {
     queryFn: () => getReleases({ page: 1, limit: 8 })
   });
 
+  useDocumentHead({
+    title: `حقق - ${data?.title}`,
+    description: data?.description,
+    ogTitle: `حقق - ${data?.title}`,
+    ogDescription: data?.description
+  });
+
   return (
     <DataWrapper isError={isError} isPending={isPending} retry={refetch} isRefetching={isFetching} isEmpty={!data}>
-      <title>{data?.title} - حقق</title>
-
       <div className="mb-12 space-y-8">
         <header className="bg-accent py-12">
           <DefaultMotionDiv className="container flex flex-col items-center gap-4 md:flex-row">

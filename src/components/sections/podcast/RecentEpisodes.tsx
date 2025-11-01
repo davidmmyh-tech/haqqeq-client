@@ -14,7 +14,7 @@ export default function RecentEpisodesSection({ episodes }: { episodes: Episode[
           description={ep.description}
           title={ep.title}
           publishDate={ep.created_at}
-          soundTrackSrc={ep.audio_url}
+          audioSrc={ep.audio_url}
         />
       ))}
     </div>

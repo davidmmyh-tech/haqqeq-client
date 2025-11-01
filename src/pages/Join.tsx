@@ -3,6 +3,7 @@ import ErrorMessage from '@/components/ui/extend/error-message';
 import FormInput from '@/components/ui/extend/FormInput';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import { subscribeWhatsApp } from '@/services/subscribe';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
@@ -28,10 +29,16 @@ export default function JoinPage() {
 
   const submitForm = () => mutate();
 
+  useDocumentHead({
+    title: `حقق - اشترك ليصلك كل جديد`,
+    description: 'اشترك في خدمة حقق على الواتس اب ليصلك كل جديد من حقق من بودكاست، مقالات، وفيديوهات مباشرة على هاتفك.',
+    ogTitle: `حقق - اشترك ليصلك كل جديد`,
+    ogDescription:
+      'اشترك في خدمة حقق على الواتس اب ليصلك كل جديد من حقق من بودكاست، مقالات، وفيديوهات مباشرة على هاتفك.'
+  });
+
   return (
     <section className="container mt-22 flex min-h-[70vh] flex-col items-center gap-8">
-      <title>تابعنا عن طريق الواتس ااب - حقق</title>
-
       {subscribeState ? (
         <>
           <CircleCheckBig className="stroke-succces" size={150} />

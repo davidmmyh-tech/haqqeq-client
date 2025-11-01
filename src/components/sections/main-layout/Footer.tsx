@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Important links */}
           <div className="flex basis-1/3 justify-between gap-8">
             <ul className="space-y-6 text-nowrap">
-              <p className="text-xl font-bold">حقق</p>
+              <li className="text-xl font-bold">حقق</li>
               {HAQEQ_MENU.map((item) => (
                 <li key={item.name}>
                   <NavLink className="hover:underline" to={item.to}>
@@ -37,7 +37,7 @@ export default function Footer() {
               ))}
             </ul>
             <ul className="space-y-6 text-nowrap">
-              <p className="text-xl font-bold">اكتشف</p>
+              <li className="text-xl font-bold">اكتشف</li>
               {DISCOVER_MENU.map((item) => (
                 <li key={item.name}>
                   <NavLink className="hover:underline" to={item.to}>
@@ -51,7 +51,7 @@ export default function Footer() {
           {/* Contacts */}
           <div className="flex flex-col">
             <ul className="space-y-6">
-              <p className="text-xl font-bold underline">تواصــــــــــــــــــل معنا</p>
+              <li className="text-xl font-bold underline">تواصــــــــــــــــــل معنا</li>
               <li className="flex gap-2">
                 <PhoneIcon />
                 <Link to="tel:0567771966" className="hover:underline">

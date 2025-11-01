@@ -4,6 +4,7 @@ import HSplit from '@/components/ui/h-split';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
 import { INFINITE_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY } from '@/constants/query-keys';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { getVideosCategoryDetails } from '@/services/getVideos';
@@ -40,6 +41,13 @@ export default function VideoCategoryPage() {
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useDocumentHead({
+    title: `حقق - ${category?.name}`,
+    description: category?.description,
+    ogTitle: `حقق - ${category?.name}`,
+    ogDescription: category?.description
+  });
 
   return (
     <DataWrapper isError={isError} isPending={isLoading} retry={refetch} isRefetching={isFetching} isEmpty={!data}>

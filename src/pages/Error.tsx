@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import { ArrowLeftIcon, LucideHome } from 'lucide-react';
 import { useNavigate, useRouteError } from 'react-router';
 
@@ -15,10 +16,15 @@ export default function ErrorPage() {
 
   const error = useRouteError() as RouterError;
 
+  useDocumentHead({
+    title: `حقق - ${error.statusText}`,
+    description: error.data,
+    ogTitle: `حقق - ${error.statusText}`,
+    ogDescription: error.data
+  });
+
   return (
     <div id="error-page" className="flex h-screen flex-col items-center justify-center gap-4">
-      <title>صفحة غير متاحة - حقق</title>
-
       <h2 className="text-8xl">{error.status}</h2>
       <div className="flex gap-2 text-4xl">
         <p>{error.status === 404 ? 'يبدو انه لا يجد شيء هنا !' : 'حدث خطاء غير متوقع.'}</p>

@@ -24,7 +24,13 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
         onMouseEnter={() => handlePrefetchBlog(heroBlog.id)}
       >
         <Link to={`/المدونة/${heroBlog?.id}`} className="max-h-80 basis-1/3 overflow-clip md:h-80">
-          <Img src={heroBlog?.image} alt={heroBlog?.title} className="h-full w-full object-cover object-top" />
+          <Img
+            src={heroBlog?.image}
+            alt={heroBlog?.title}
+            loading="eager"
+            fetchPriority="high"
+            className="h-full w-full object-cover object-top"
+          />
         </Link>
 
         <div className="basis-2/3 p-4">

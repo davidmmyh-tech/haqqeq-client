@@ -4,6 +4,7 @@ import HSplit from '@/components/ui/h-split';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
 import { INFINITE_QUERY_KEY, PODCAST_QUERY_KEY } from '@/constants/query-keys';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { getPodcastDetails } from '@/services/getPodcasts';
@@ -35,10 +36,15 @@ export default function PodcastDetailsPage() {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  useDocumentHead({
+    title: `حقق - ${podcast?.title}`,
+    description: podcast?.description,
+    ogTitle: `حقق - ${podcast?.title}`,
+    ogDescription: podcast?.description
+  });
+
   return (
     <DataWrapper isError={isError} isPending={isLoading} retry={refetch} isRefetching={isFetching} isEmpty={!data}>
-      <title>{podcast?.title} - حقق</title>
-
       <div className="container my-8 space-y-10">
         <DefaultMotionElement as="header" className="flex flex-col gap-2 sm:flex-row">
           <Img

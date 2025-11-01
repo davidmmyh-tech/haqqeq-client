@@ -8,10 +8,11 @@ export type CustomeImgProps = {
   className?: string;
 } & Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'alt'>;
 
-export default function Img({ src, alt, className, ...props }: CustomeImgProps) {
+export default function Img({ src, alt, className, loading = 'lazy', ...props }: CustomeImgProps) {
   const [error, setError] = useState(false);
 
-  if (!src || error) return <img src={fallbackImage} alt={alt ?? ''} className={className} loading="lazy" {...props} />;
+  if (!src || error)
+    return <img src={fallbackImage} alt={alt ?? ''} className={className} loading={loading} {...props} />;
 
   return (
     <img

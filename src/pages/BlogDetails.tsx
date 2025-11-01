@@ -12,6 +12,7 @@ import { PencilLine } from 'lucide-react';
 import { BLOG_CATEGORY_QUERY_KEY, BLOG_QUERY_KEY } from '@/constants/query-keys';
 import MoreBlogsSection from '@/components/sections/Blogs/MoreBlogs';
 import InnerHTML from '@/components/ui/extend/InnerHTML';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 
 export default function BlogDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
@@ -30,6 +31,13 @@ export default function BlogDetailsPage() {
   });
   const relatedBlogs = relatedBlogsQuery.data?.blogs || [];
   const category = relatedBlogsQuery.data?.category;
+
+  useDocumentHead({
+    title: `حقق - ${data?.title}`,
+    description: data?.description,
+    ogTitle: `حقق - ${data?.title}`,
+    ogDescription: data?.description
+  });
 
   return (
     <DataWrapper

@@ -9,6 +9,7 @@ import { PODCASTS_PAGE_EPISODES_QUERY_KEY } from '@/constants/query-keys';
 import DataWrapper from '@/layouts/DataWrapper';
 import { useQuery } from '@tanstack/react-query';
 import { getEpisodes } from '@/services/getEpisodes';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 
 export default function PodcastsPage() {
   const { data, isPending, isError, refetch, isFetching } = useQuery({
@@ -19,10 +20,15 @@ export default function PodcastsPage() {
   const hero = episodes.shift();
   const moreEpisodes = episodes.splice(0, 4);
 
+  useDocumentHead({
+    title: `حقق - البودكاست`,
+    description: 'اكتشف أحدث حلقات البودكاست من حقق واستمتع بالمحتوى الصوتي المميز في مختلف المجالات.',
+    ogTitle: `حقق - البودكاست`,
+    ogDescription: 'اكتشف أحدث حلقات البودكاست من حقق واستمتع بالمحتوى الصوتي المميز في مختلف المجالات.'
+  });
+
   return (
     <div className="mt-8 mb-28 space-y-12">
-      <title>بودكاست - حقق</title>
-
       <header className="container space-y-8">
         <SectionHeader icon={podcast} title="البودكـــــاست" />
         <DataWrapper isError={isError} isPending={isPending} retry={refetch} isRefetching={isFetching} isEmpty={!hero}>

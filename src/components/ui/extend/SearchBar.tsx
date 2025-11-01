@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn, hideBodyScroll, showBodyScroll } from '@/lib/utils';
 import SearchIcon from '../icons';
 import { memo, useState, type ChangeEvent } from 'react';
 import Img from './Img';
@@ -47,11 +47,11 @@ export default function SearchBar() {
         dir="ltr"
         onFocus={() => {
           setShowData(true);
-          document.body.classList.add('overflow-hidden');
+          hideBodyScroll();
         }}
         onBlur={() => {
-          document.body.classList.remove('overflow-hidden');
           setShowData(false);
+          showBodyScroll();
         }}
         onChange={handleOnChange}
         autoComplete="off"
@@ -155,7 +155,7 @@ const SearchItem = memo(function ({
 }) {
   return (
     <li className="hover:bg-accent border-b-2">
-      <Link to={to} className="flex cursor-pointer gap-2 px-4 py-2" onMouseDown={(e) => e.preventDefault()}>
+      <Link to={to} className="flex cursor-pointer gap-2 px-4 py-2">
         <Img src={imageUrl} alt={name} className="h-9 w-9 shrink-0 rounded-sm object-cover" />
         <div>
           <p className="text-sm font-bold">{name}</p>

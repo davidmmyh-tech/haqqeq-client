@@ -4,6 +4,7 @@ import HSplit from '@/components/ui/h-split';
 import Logo from '@/components/ui/logo';
 import SubmitButton from '@/components/ui/submit-button';
 import { BLOG_CATEGORY_QUERY_KEY, INFINITE_QUERY_KEY } from '@/constants/query-keys';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { getBlogsCategoryDetails } from '@/services/getBlogs';
@@ -33,6 +34,13 @@ export default function PodcastDetailsPage() {
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useDocumentHead({
+    title: `حقق - ${category?.name}`,
+    description: category?.description,
+    ogTitle: `حقق - ${category?.name}`,
+    ogDescription: category?.description
+  });
 
   return (
     <DataWrapper isError={isError} isPending={isLoading} retry={refetch} isRefetching={isFetching} isEmpty={!data}>

@@ -53,6 +53,7 @@ body {
     Arial;
 
   font-weight: 400;
+  scrollbar-gutter: stable;
 }
 
 :root {

@@ -4,6 +4,7 @@ import MoreEpisodesSection from '@/components/sections/podcast/MoreEpisodes';
 import HeroAudio from '@/components/ui/extend/HeroTarack';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { EPISODE_QUERY_KEY, PODCAST_QUERY_KEY } from '@/constants/query-keys';
+import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { parsedDate, remote } from '@/lib/utils';
@@ -28,6 +29,13 @@ export default function EpisodeDetailsPage() {
     enabled: !!data?.podcast_id && isFetched
   });
   const relatedEpisodes = relatedEpisodesQuery.data?.episodes || [];
+
+  useDocumentHead({
+    title: `حقق - ${data?.title}`,
+    description: data?.description,
+    ogTitle: `حقق - ${data?.title}`,
+    ogDescription: data?.description
+  });
 
   return (
     <>

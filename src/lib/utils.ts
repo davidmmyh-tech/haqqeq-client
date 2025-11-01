@@ -19,11 +19,11 @@ export function parsedDate(date?: string | null) {
 export function formatDuration(sec: number | null) {
   if (sec == null || !isFinite(sec)) return '--:--';
   const s = Math.floor(sec);
-  const mm = Math.floor(s / 60)
+  const m = Math.floor(s / 60)
     .toString()
     .padStart(2, '0');
   const ss = (s % 60).toString().padStart(2, '0');
-  return `${mm}:${ss}`;
+  return `${m}:${ss}`;
 }
 
 export function remote(path: string | null | undefined) {
@@ -34,4 +34,17 @@ export function remote(path: string | null | undefined) {
 export function isHere(to: string, location: string) {
   if (to === '/' && location === '/') return true;
   return to !== '/' && decodeURIComponent(location).includes(to);
+}
+
+export function hideBodyScroll() {
+  if (document === undefined) return;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+  document.body.style.paddingRight = `${scrollbarWidth + 0.1}px`;
+  document.body.style.overflowY = 'hidden';
+}
+
+export function showBodyScroll() {
+  if (document === undefined) return;
+  document.body.style.paddingRight = `0px`;
+  document.body.style.overflowY = 'auto';
 }

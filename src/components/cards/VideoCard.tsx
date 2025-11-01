@@ -38,8 +38,9 @@ const VideoCard = memo(({ thumbnail, category, publishDate, title, description, 
       <div className="px-2">
         <p className="mt-4 text-xl font-medium">{title}</p>
         <p className="mt-2">
-          {category && ' في'}
-          <Link to={`/الفيديوهات/تصنيفات/${categoryId}`} className="font-bold">
+          {category && 'في'}
+          <Link to={`/الفيديوهات/تصنيف/${categoryId}`} className="font-bold">
+            {' '}
             {category}
           </Link>
           <span className="text-muted ms-3 inline-block text-sm"> {parsedDate(publishDate)}</span>

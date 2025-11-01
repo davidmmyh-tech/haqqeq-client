@@ -22,11 +22,17 @@ export default function NavItems({ onSelect }: Props) {
 
   const mainMenu = useMemo(
     () => [
-      { icon: home, name: 'الرئيسية', to: '/', prefetch: handlePrefetchHomePageBlogs },
-      { icon: podcast, name: 'البودكاست', to: '/البودكاست', prefetch: handlePrefetchPodcastsPageEpisodes },
-      { icon: release, name: 'إصدارات', to: '/إصدارات', prefetch: handlePrefetchReleasesPage },
-      { icon: videos, name: 'الفيديوهات', to: '/الفيديوهات', prefetch: handlePrefetchVideosPage },
-      { icon: blog, name: 'المدونة', to: '/المدونة', prefetch: handlePrefetchBlogsPageBlogs }
+      { icon: home, name: 'الرئيسية', to: '/', prefetch: handlePrefetchHomePageBlogs, iconAlt: 'home' },
+      {
+        icon: podcast,
+        name: 'البودكاست',
+        to: '/البودكاست',
+        prefetch: handlePrefetchPodcastsPageEpisodes,
+        iconAlt: 'podcast'
+      },
+      { icon: release, name: 'إصدارات', to: '/إصدارات', prefetch: handlePrefetchReleasesPage, iconAlt: 'release' },
+      { icon: videos, name: 'الفيديوهات', to: '/الفيديوهات', prefetch: handlePrefetchVideosPage, iconAlt: 'videos' },
+      { icon: blog, name: 'المدونة', to: '/المدونة', prefetch: handlePrefetchBlogsPageBlogs, iconAlt: 'blog' }
     ],
     [
       handlePrefetchBlogsPageBlogs,
@@ -49,7 +55,7 @@ export default function NavItems({ onSelect }: Props) {
       <NavLink onClick={onSelect} to={item.to} className="flex items-start gap-1 text-lg">
         <img
           src={item.icon}
-          alt={item.name}
+          alt={item.iconAlt}
           className={`h-6 contrast-200 ${isHere(item.to, location.pathname) ? 'invert' : ''}`}
         />
         {item.name}
