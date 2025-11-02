@@ -1,128 +1,101 @@
-export type ItemStatus = 'published' | 'draft' | 'scheduled';
-export type Role = 'admin' | 'viewer';
+export interface Pagination {
+  current_page: number;
+  per_page: number;
+  total_items: number;
+  last_page: number;
+}
 
 export interface User {
+  id: number;
   name: string;
-  role: Role;
   email: string;
-  avatar: string;
+  phone: string;
 }
 
-export interface Podcast {
+export interface Category {
   id: number;
-  slug: string;
-  title: string;
+  name: string;
+  image: string;
   description: string;
-  language: 'ar' | 'en';
-  website_url: string | null;
-  cover_image: string;
-  rss_url: string | null;
-  episodes: Episode[];
-  created_at: string;
-  updated_at: string;
 }
 
-export interface Episode {
+export interface ReleaseListItem {
   id: number;
-  podcast_id: number;
-  season_id: number | null;
-  transcript_id: number | null;
-  episode_number: number;
   title: string;
-  slug: string;
-  description: string;
-  short_description: string | null;
-  duration_seconds: number;
-  explicit: boolean;
-  status: ItemStatus;
+  short_description: string;
+  image: string;
+  views: number;
   published_at: string;
-  cover_image: string;
-  audio_url: string | null;
-  video_url: string;
-  file_size: number | null;
-  mime_type: number | null;
-  created_at: string;
-  updated_at: string;
-  podcast: Podcast | null;
-  season: Season | null;
-  views_count: number;
+  pdf_url: string;
 }
 
-export interface Blog {
+export interface ReleaseDetails extends ReleaseListItem {
+  description: string;
+}
+
+export interface BlogListItem {
   id: number;
-  user_id: number;
   title: string;
-  content: string;
-  category: {
-    id: number | string;
-    name: string;
-  };
-  category_id: string | number;
-  status: ItemStatus;
-  publish_date: string;
+  description: string;
   views: number;
   image: string;
-  created_at: string;
-  updated_at: string;
-  user: {
+  published_at: string;
+  category: {
     id: number;
     name: string;
-    email: string;
-    role: Role;
-    avatar_url: null;
-    created_at: string;
-    updated_at: string;
   };
+}
+
+export interface BlogDetails extends BlogListItem {
+  content: string;
   header_image: string;
-  description: string;
   announcement: string;
+  user_name: string;
 }
-export interface BlogCategory {
+
+export interface EpisodeListItem {
   id: number;
-  name: string;
-  slug: string;
+  title: string;
+  description: string;
+  views: number;
   image: string;
-  description: string;
-  blogs_count: number;
-  created_at: string;
-  updated_at: string;
+  audio_url: string;
+  published_at: string;
+  podcast: {
+    id: number;
+    name: string;
+  };
 }
 
-export interface Release {
+export interface EpisodeDetails extends EpisodeListItem {
+  description: string;
+  video_url: string;
+}
+
+export interface VideoListItem {
   id: number;
   title: string;
   description: string;
-  images: string[];
-  file_url: string;
-  excel_url: string;
-  powerbi_url: string;
-  created_at: string;
+  views: number;
+  image: string;
+  published_at: string;
+  category: {
+    id: number;
+    name: string;
+  };
 }
 
-export interface Season {
-  id: number;
-  podcast_id: number;
-  number: number;
-  title: string;
-  description: string;
-  release_date: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Video {
+export interface VideoDetails extends VideoListItem {
   id: number;
   title: string;
+  short_description: string;
   description: string;
-  views_count: string;
-  video_path: string;
-  image_path: string;
-  created_at: string;
-  category_id: string;
-  category_name: string;
-}
-
-export interface Params {
-  page?: number;
-  limit?: number;
+  views: number;
+  image: string;
+  video_url: string;
+  published_at: string;
+  category: {
+    id: number;
+    name: string;
+  };
 }

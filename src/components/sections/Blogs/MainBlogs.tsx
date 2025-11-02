@@ -1,7 +1,7 @@
 import BlogCard from '@/components/cards/BlogCard';
-import type { Blog } from '@/schemas/types';
+import type { BlogListItem } from '@/schemas/types';
 
-export default function MainBlogsSection({ blogs }: { blogs: Blog[] }) {
+export default function MainBlogsSection({ blogs }: { blogs: BlogListItem[] }) {
   return (
     <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
       {blogs.map((blog) => (
@@ -13,7 +13,7 @@ export default function MainBlogsSection({ blogs }: { blogs: Blog[] }) {
           categoryId={blog.category.id}
           description={blog.description}
           title={blog.title}
-          publishDate={blog.created_at}
+          publishDate={blog.published_at}
           views={blog.views}
         />
       ))}

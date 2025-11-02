@@ -43,8 +43,8 @@ export default function SpecialProgramsSection() {
           {mainPodcasts.map((podcast) => (
             <SquareImage
               key={podcast.id}
-              src={podcast.cover_image}
-              alt={podcast.title}
+              src={podcast.image}
+              alt={podcast.name}
               to={`/البودكاست/${podcast?.id}`}
               onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
             />
@@ -56,8 +56,8 @@ export default function SpecialProgramsSection() {
             {podcasts.map((podcast) => (
               <SquareImage
                 key={podcast.id}
-                src={podcast.cover_image}
-                alt={podcast.title}
+                src={podcast.image}
+                alt={podcast.name}
                 to={`/البودكاست/${podcast?.id}`}
                 onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
               />

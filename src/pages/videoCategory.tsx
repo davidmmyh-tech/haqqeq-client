@@ -22,20 +22,15 @@ export default function VideoCategoryPage() {
       queryKey: [INFINITE_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY, `${id}`],
       queryFn: ({ pageParam }) => getVideosCategoryDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.data.doc_videos.length < PAGE_LIMIT) return undefined;
+        if (lastPage.pagination.total_items <= PAGE_LIMIT * allPages.length) return undefined;
         return allPages.length + 1;
       },
       initialPageParam: 1,
       throwOnError: true
     });
 
-  const videos = data?.pages?.flatMap((p) => p.data.doc_videos ?? []) ?? [];
-  const category = {
-    id: data?.pages?.[0]?.data.id,
-    name: data?.pages?.[0]?.data.name,
-    description: '',
-    image: ''
-  };
+  const videos = data?.pages?.flatMap((p) => p.videos) ?? [];
+  const category = data?.pages[0].category ?? null;
   const totalEpisodes = null;
 
   const loadMore = useCallback(() => {
@@ -58,6 +53,8 @@ export default function VideoCategoryPage() {
           <Img
             src={category?.image}
             alt={category?.name}
+            loading="eager"
+            fetchPriority="high"
             className="aspect-video w-full shrink-0 rounded-xl object-cover sm:w-44"
           />
           <div className="space-y-2">

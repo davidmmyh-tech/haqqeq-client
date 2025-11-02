@@ -21,18 +21,20 @@ export default function VideoDetailsPage() {
     retry: 0
   });
 
+  const video = data?.data;
+
   const relatedVideosQuery = useQuery({
-    queryKey: [VIDEOS_CATEGORY_QUERY_KEY, data?.category_id],
-    queryFn: () => getVideosCategoryDetails(data?.category_id || '', { page: 1, limit: 6 }),
-    enabled: !!data?.category_id && isFetched
+    queryKey: [VIDEOS_CATEGORY_QUERY_KEY, video?.category.id],
+    queryFn: () => getVideosCategoryDetails(video?.category.id || '', { page: 1, limit: 6 }),
+    enabled: !!video?.category.id && isFetched
   });
-  const relatedVideos = relatedVideosQuery.data?.data.doc_videos || [];
+  const relatedVideos = relatedVideosQuery.data?.videos || [];
 
   useDocumentHead({
-    title: `حقق - ${data?.title}`,
-    description: data?.description,
-    ogTitle: `حقق - ${data?.title}`,
-    ogDescription: data?.description
+    title: `حقق - ${video?.title}`,
+    description: video?.description,
+    ogTitle: `حقق - ${video?.title}`,
+    ogDescription: video?.description
   });
 
   return (
@@ -40,23 +42,23 @@ export default function VideoDetailsPage() {
       <div className="container my-8 space-y-12">
         <header className="space-y-2">
           <DefaultMotionElement className="mb-4 text-[28px] font-medium" as="h1">
-            {data?.title}
+            {video?.title}
           </DefaultMotionElement>
 
           <DefaultMotionElement as="p" className="text-muted mb-4 pe-14">
-            {data?.description}
+            {video?.description}
           </DefaultMotionElement>
 
           <DefaultMotionElement as="p">
-            في <span className="font-bold">{'category'}</span>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(data?.created_at)}</span>
+            في <span className="font-bold">{video?.category.name}</span>
+            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.published_at)}</span>
           </DefaultMotionElement>
 
           <DefaultMotionElement className="mt-8 aspect-video max-h-[80vh] w-full overflow-clip rounded-2xl bg-black">
             <video
               controls
-              src={remote(`${data?.video_path}`)}
-              poster={data?.image_path}
+              src={remote(`${video?.video_url}`)}
+              poster={video?.image}
               className="h-full w-full bg-black object-contain"
             />
           </DefaultMotionElement>
@@ -65,7 +67,7 @@ export default function VideoDetailsPage() {
         <section>
           <DefaultMotionElement className="container space-y-8">
             <SectionCard>
-              <p className="text-muted mt-4 text-xl">{data?.description}</p>
+              <p className="text-muted mt-4 text-xl">{video?.description}</p>
             </SectionCard>
           </DefaultMotionElement>
         </section>

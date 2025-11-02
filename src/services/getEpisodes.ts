@@ -1,28 +1,15 @@
-import type { Episode } from '@/schemas/types';
+import type { EpisodeDetails, EpisodeListItem, Pagination } from '@/schemas/types';
 import api from './api';
 
 type EpisodesResponse = {
-  data: Episode[];
+  status: string;
+  data: EpisodeListItem[];
+  pagination: Pagination;
+};
 
-  current_page: number;
-  last_page: number;
-  from: number;
-  per_page: number;
-  to: number;
-  total: number;
-  first_page_url: string;
-  last_page_url: string;
-  links: [
-    {
-      url: string;
-      label: string;
-      page: number;
-      active: boolean;
-    }
-  ];
-  next_page_url: string;
-  path: string;
-  prev_page_url: string;
+type EpisodeDetailsResponse = {
+  status: string;
+  data: EpisodeDetails;
 };
 
 export async function getEpisodes({ page, limit = 5 }: { page: number; limit?: number }) {
@@ -30,5 +17,5 @@ export async function getEpisodes({ page, limit = 5 }: { page: number; limit?: n
 }
 
 export async function getEpisodeDetails(id: string | number) {
-  return api.get<{ data: Episode }>(`/api/episodes/${id}`).then((res) => res.data.data);
+  return api.get<EpisodeDetailsResponse>(`/api/episodes/${id}`).then((res) => res.data.data);
 }

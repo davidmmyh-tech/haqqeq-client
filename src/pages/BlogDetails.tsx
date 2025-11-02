@@ -23,54 +23,48 @@ export default function BlogDetailsPage() {
     throwOnError: true,
     retry: 0
   });
+  const blog = data?.data;
 
   const relatedBlogsQuery = useQuery({
-    queryKey: [BLOG_CATEGORY_QUERY_KEY, `${data?.category_id}`],
-    queryFn: () => getBlogsCategoryDetails(data?.category_id || '', { page: 1, limit: 8 }),
-    enabled: !!data?.category_id && isFetched
+    queryKey: [BLOG_CATEGORY_QUERY_KEY, `${blog?.category.id}`],
+    queryFn: () => getBlogsCategoryDetails(blog?.category.id || '', { page: 1, limit: 8 }),
+    enabled: !!blog?.category.id && isFetched
   });
   const relatedBlogs = relatedBlogsQuery.data?.blogs || [];
-  const category = relatedBlogsQuery.data?.category;
 
   useDocumentHead({
-    title: `حقق - ${data?.title}`,
-    description: data?.description,
-    ogTitle: `حقق - ${data?.title}`,
-    ogDescription: data?.description
+    title: `حقق - ${blog?.title}`,
+    description: blog?.description,
+    ogTitle: `حقق - ${blog?.title}`,
+    ogDescription: blog?.description
   });
 
   return (
-    <DataWrapper
-      isError={isError}
-      isPending={isPending || isFetching}
-      retry={refetch}
-      isEmpty={!data}
-      isRefetching={isFetching}
-    >
-      <title>{data?.title} - حقق</title>
-
+    <DataWrapper isError={isError} isPending={isPending} retry={refetch} isEmpty={!data} isRefetching={isFetching}>
       <div className="space-y-8">
         <header className="bg-accent">
           <DefaultMotionElement className="container flex flex-col items-center gap-4 py-12 md:flex-row">
             <Img
-              src={data?.image}
-              alt={data?.title}
+              src={blog?.image}
+              alt={blog?.title}
+              loading="eager"
+              fetchPriority="high"
               className="h-80 w-full rounded-2xl object-cover object-top md:w-2/6"
             />
             <div className="basis-4/6">
-              <h1 className="mb-4 text-[28px] font-medium">{data?.title}</h1>
-              <p className="text-muted mb-4">{data?.description.slice(0, 200)}</p>
+              <h1 className="mb-4 text-[28px] font-medium">{blog?.title}</h1>
+              <p className="text-muted mb-4">{blog?.description.slice(0, 200)}</p>
               <div className="inline-flex gap-2 rounded-sm bg-[#FFC39B] px-4 py-2 text-xs font-bold">
                 <PencilLine size={15} />
-                {data?.user.name}
+                {blog?.user_name}
               </div>
             </div>
           </DefaultMotionElement>
         </header>
 
-        {data?.header_image && (
+        {blog?.header_image && (
           <div className="container flex justify-center">
-            <Img src={data.header_image} alt={data.announcement} className="max-h-36 w-full rounded-lg object-cover" />
+            <Img src={blog.header_image} alt={blog.announcement} className="max-h-36 w-full rounded-lg object-cover" />
           </div>
         )}
 
@@ -79,13 +73,13 @@ export default function BlogDetailsPage() {
             <SectionHeader icon={release} title="المقالة" as="h3" />
             <DefaultMotionElement>
               <SectionCard>
-                <InnerHTML content={data?.content || ''} />
+                <InnerHTML content={blog?.content || ''} />
               </SectionCard>
             </DefaultMotionElement>
           </div>
         </section>
 
-        {data?.announcement && <InnerHTML content={data.announcement} />}
+        {blog?.announcement && <InnerHTML content={blog.announcement} />}
 
         <section>
           <div className="container">
@@ -96,7 +90,7 @@ export default function BlogDetailsPage() {
         <section>
           <div className="container mb-12 space-y-8">
             <SectionHeader icon={release} title="المزيد من مقالات حقق" as="h4" />
-            <MoreBlogsSection blogs={relatedBlogs} defaultCategory={{ id: category?.id, name: category?.name }} />
+            <MoreBlogsSection blogs={relatedBlogs} />
           </div>
         </section>
       </div>

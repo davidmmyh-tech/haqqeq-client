@@ -1,4 +1,4 @@
-import type { Episode, Podcast, Release } from '@/schemas/types';
+import type { Category, EpisodeDetails, ReleaseDetails } from '@/schemas/types';
 import api from './api';
 
 // Common data structure for search results
@@ -39,7 +39,7 @@ interface FullSearchResponse {
       created_at: string;
       updated_at: string;
     }>;
-    releases?: SearchResultData<Release>;
+    releases?: SearchResultData<ReleaseDetails>;
     doc_videos?: SearchResultData<{
       id: number;
       title: string;
@@ -51,8 +51,8 @@ interface FullSearchResponse {
       created_at: string;
       updated_at: string;
     }>;
-    episodes?: SearchResultData<Episode>;
-    podcasts?: SearchResultData<Podcast>;
+    episodes?: SearchResultData<EpisodeDetails>;
+    podcasts?: SearchResultData<Category>;
   };
 }
 

@@ -10,7 +10,7 @@ export default function VideosSection() {
     queryFn: () => getVideos({ page: 1, limit: 3 })
   });
 
-  const videos = data ? data.data.data : [];
+  const videos = data ? data.data : [];
 
   return (
     <DataWrapper
@@ -25,11 +25,11 @@ export default function VideosSection() {
           <VedioCard
             key={video.id}
             id={video.id}
-            thumbnail={video.image_path}
-            category={video.category_name}
-            categoryId={video.category_id}
+            thumbnail={video.image}
+            category={video.category.name}
+            categoryId={video.category.id}
             title={video.title}
-            publishDate={video.created_at}
+            publishDate={video.published_at}
           />
         ))}
       </div>

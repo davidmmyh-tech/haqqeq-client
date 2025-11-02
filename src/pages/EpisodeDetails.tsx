@@ -24,9 +24,9 @@ export default function EpisodeDetailsPage() {
   });
 
   const relatedEpisodesQuery = useQuery({
-    queryKey: [PODCAST_QUERY_KEY, data?.podcast_id],
-    queryFn: () => getPodcastDetails(data?.podcast_id || '', { page: 1, limit: 8 }),
-    enabled: !!data?.podcast_id && isFetched
+    queryKey: [PODCAST_QUERY_KEY, data?.podcast.id],
+    queryFn: () => getPodcastDetails(data?.podcast.id || '', { page: 1, limit: 8 }),
+    enabled: !!data?.podcast.id && isFetched
   });
   const relatedEpisodes = relatedEpisodesQuery.data?.episodes || [];
 
@@ -49,11 +49,11 @@ export default function EpisodeDetailsPage() {
             </DefaultMotionElement>
 
             <DefaultMotionElement as="p" className="text-muted mb-4 pe-14">
-              {data?.short_description}
+              {data?.description}
             </DefaultMotionElement>
 
             <DefaultMotionElement as="p">
-              في <span className="font-bold">{data?.podcast?.title}</span>
+              في <span className="font-bold">{data?.podcast.name}</span>
               <span className="text-muted ms-3 inline-block text-sm">{parsedDate(data?.published_at)}</span>
             </DefaultMotionElement>
 
@@ -65,7 +65,7 @@ export default function EpisodeDetailsPage() {
               <video
                 controls
                 src={remote(`${data?.video_url}`)}
-                poster={data?.cover_image}
+                poster={data?.image}
                 className="h-full w-full bg-black object-contain"
               />
             </DefaultMotionElement>

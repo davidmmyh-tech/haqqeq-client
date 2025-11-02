@@ -1,41 +1,28 @@
+import type { BlogDetails, BlogListItem, Category, Pagination } from '@/schemas/types';
 import api from './api';
-import type { Blog, BlogCategory } from '@/schemas/types';
 
 type BlogsResponse = {
-  data: Blog[];
-  pagination: {
-    current_page: number;
-    per_page: number;
-    total: number;
-    last_page: number;
-  };
+  success: boolean;
+  data: BlogListItem[];
+  pagination: Pagination;
+};
+
+type BlogDetailsResponse = {
+  success: boolean;
+  data: BlogDetails;
+};
+
+type BlogsCategoryDetailsResponse = {
+  success: boolean;
+  category: Category;
+  blogs: BlogListItem[];
+  pagination: Pagination;
 };
 
 type BlogsCategoriesResponse = {
-  data: BlogCategory[];
-  pagination: {
-    current_page: number;
-    per_page: number;
-    total: number;
-    last_page: number;
-  };
-};
-
-type CategoryDetailsResponse = {
-  category: {
-    id: string | number;
-    name: string;
-    slug: string;
-    image: string;
-    description: string;
-  };
-  blogs: Blog[];
-  pagination: {
-    current_page: number;
-    per_page: number;
-    total: number;
-    last_page: number;
-  };
+  success: boolean;
+  data: Category[];
+  pagination: Pagination;
 };
 
 export async function getBlogs({ page, limit = 5 }: { page: number; limit?: number }) {
@@ -43,7 +30,7 @@ export async function getBlogs({ page, limit = 5 }: { page: number; limit?: numb
 }
 
 export async function getBlogDetails(id: string | number) {
-  return api.get<Blog>(`/api/blogs/${id}`).then((res) => res.data);
+  return api.get<BlogDetailsResponse>(`/api/blogs/${id}`).then((res) => res.data);
 }
 
 export async function getBlogsCategories({ limit, page }: { limit?: number; page?: number }) {
@@ -54,6 +41,6 @@ export async function getBlogsCategories({ limit, page }: { limit?: number; page
 
 export async function getBlogsCategoryDetails(id: string | number, { limit, page }: { limit?: number; page?: number }) {
   return api
-    .get<CategoryDetailsResponse>(`/api/categories/blogs/${id}`, { params: { limit, page } })
+    .get<BlogsCategoryDetailsResponse>(`/api/categories/blogs/${id}`, { params: { limit, page } })
     .then((res) => res.data);
 }

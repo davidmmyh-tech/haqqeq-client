@@ -1,24 +1,15 @@
-import type { Release } from '@/schemas/types';
+import type { Pagination, ReleaseDetails, ReleaseListItem } from '@/schemas/types';
 import api from './api';
 
 type ReleasesResponse = {
-  data: Release[];
-  current_page: number;
-  from: number;
-  last_page: number;
-  links: [
-    {
-      url: string | null;
-      label: string;
-      page: string | null;
-      active: boolean;
-    }
-  ];
-  next_page_url: string;
-  per_page: number;
-  prev_page_url: string;
-  to: number;
-  total: number;
+  success: boolean;
+  data: ReleaseListItem[];
+  pagination: Pagination;
+};
+
+type ReleaseDetailsResponse = {
+  success: boolean;
+  data: ReleaseDetails;
 };
 
 export async function getReleases({ page, limit = 5 }: { page: number; limit: number }) {
@@ -26,5 +17,5 @@ export async function getReleases({ page, limit = 5 }: { page: number; limit: nu
 }
 
 export async function getReleaseDetails(id: string | number) {
-  return api.get<Release>(`/api/releases/${id}`).then((res) => res.data);
+  return api.get<ReleaseDetailsResponse>(`/api/releases/${id}`).then((res) => res.data);
 }

@@ -1,29 +1,16 @@
-import type { Episode, Podcast } from '@/schemas/types';
+import type { Category, EpisodeListItem, Pagination } from '@/schemas/types';
 import api from './api';
 
 type PodcastsResponse = {
-  data: {
-    id: number;
-    slug: string;
-    title: string;
-    language: string;
-    website_url: string;
-    cover_image: string;
-    rss_url: string;
-    created_at: string;
-    updated_at: string;
-  }[];
+  success: boolean;
+  data: Category[];
+  pagination: Pagination;
 };
 
 type PodcastResponse = {
-  podcast: Podcast;
-  episodes: Episode[];
-  pagination: {
-    current_page: number;
-    per_page: number;
-    total: number;
-    last_page: number;
-  };
+  podcast: Category;
+  episodes: EpisodeListItem[];
+  pagination: Pagination;
 };
 
 export default async function getPodcasts({ page, limit = 5 }: { page: number; limit?: number }) {

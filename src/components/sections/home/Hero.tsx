@@ -5,11 +5,11 @@ import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
 import usePrefetchBlog from '@/hooks/queries/prefetch/usePrefetchBlog';
 import BlogCard from '@/components/cards/BlogCard';
-import type { Blog } from '@/schemas/types';
+import type { BlogListItem } from '@/schemas/types';
 
 type Props = {
-  heroBlog: Blog;
-  moreBlogs: Blog[];
+  heroBlog: BlogListItem;
+  moreBlogs: BlogListItem[];
 };
 export default function HeroSection({ heroBlog, moreBlogs }: Props) {
   const { handlePrefetchBlog } = usePrefetchBlog();
@@ -44,7 +44,7 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
             <Link to={`/المدونة/تصنيف/${heroBlog?.category.id}`} className="font-bold">
               {heroBlog?.category.name}
             </Link>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog?.created_at || '')}</span>
+            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog?.published_at)}</span>
           </p>
         </div>
       </DefaultMotionDiv>
@@ -58,7 +58,7 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
                 description={blog.description.slice(0, 100)}
                 title={blog.title}
                 imageSrc={blog.image}
-                publishDate={blog.created_at}
+                publishDate={blog.published_at}
                 category={blog.category.name}
                 categoryId={blog.category.id}
               />

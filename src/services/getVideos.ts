@@ -1,54 +1,28 @@
-import type { Video } from '@/schemas/types';
+import type { Category, Pagination, VideoDetails, VideoListItem } from '@/schemas/types';
 import api from './api';
 
-interface VideosResponse {
-  status: string;
-  data: {
-    current_page: number;
-    data: Video[];
-    first_page_url: string;
-    from: number;
-    last_page: number;
-    last_page_url: string;
-    links: {
-      url: string;
-      label: string;
-      page: number;
-      active: boolean;
-    }[];
-    next_page_url: string;
-    path: string;
-    per_page: number;
-    prev_page_url: string;
-    to: number;
-    total: number;
-  };
-  message: string;
-}
+type VideosResponse = {
+  success: boolean;
+  data: VideoListItem[];
+  pagination: Pagination;
+};
 
-type VideoDetailsResponse = Video;
-
-type VideosCategoryResponse = {
-  status: string;
-  message: string;
-  data: {
-    id: number;
-    name: string;
-    created_at: string;
-    doc_videos: Video[];
-  };
+type VideoDetailsResponse = {
+  success: boolean;
+  data: VideoDetails;
 };
 
 type VideosCategoriesResponse = {
-  status: string;
-  message: string;
-  data: {
-    id: 1;
-    name: string;
-    description: string;
-    image: string;
-    created_at: string;
-  }[];
+  success: boolean;
+  data: Category[];
+  pagination: Pagination;
+};
+
+type VideosCategoryDetailsResponse = {
+  success: boolean;
+  category: Category;
+  videos: VideoListItem[];
+  pagination: Pagination;
 };
 
 export async function getVideos({ page, limit = 5 }: { page?: number; limit?: number }) {
@@ -64,5 +38,5 @@ export async function getVideosCategories(params?: { limit: number; page: number
 }
 
 export async function getVideosCategoryDetails(id: string | number, params?: { limit: number; page: number }) {
-  return api.get<VideosCategoryResponse>(`/api/categories/docvideos/${id}`, { params }).then((res) => res.data);
+  return api.get<VideosCategoryDetailsResponse>(`/api/categories/docvideos/${id}`, { params }).then((res) => res.data);
 }

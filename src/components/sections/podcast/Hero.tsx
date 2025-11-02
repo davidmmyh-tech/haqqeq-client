@@ -4,10 +4,10 @@ import ViewsBadge from '@/components/ui/extend/ViewsBadge';
 import { parsedDate } from '@/lib/utils';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
-import type { Episode } from '@/schemas/types';
 import usePrefetchEpisode from '@/hooks/queries/prefetch/usePrefetchEpisode';
+import type { EpisodeListItem } from '@/schemas/types';
 
-export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: Episode }) {
+export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: EpisodeListItem }) {
   const { handlePrefetchEpisode } = usePrefetchEpisode();
 
   return (
@@ -17,8 +17,10 @@ export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: Epis
     >
       <Link to={`/البودكاست/الحلقات/${heroEpisode?.id}`} className="max-h-80 basis-1/3 overflow-clip md:h-80">
         <Img
-          src={heroEpisode?.cover_image}
+          src={heroEpisode?.image}
           alt={heroEpisode?.title}
+          loading="eager"
+          fetchPriority="high"
           className="h-full w-full rounded-2xl object-cover object-top"
         />
       </Link>
@@ -32,9 +34,9 @@ export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: Epis
         <p className="inline-block">
           في <span className="font-bold">{heroEpisode?.title}</span>
         </p>
-        <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroEpisode?.created_at || '')}</p>
+        <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroEpisode?.published_at)}</p>
 
-        <ViewsBadge views={heroEpisode?.views_count || 0} />
+        <ViewsBadge views={heroEpisode?.views} />
 
         <HeroAudio src={heroEpisode?.audio_url ?? ''} />
       </div>

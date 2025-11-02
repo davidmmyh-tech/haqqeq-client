@@ -26,7 +26,7 @@ export default function LoginButton() {
   const [isRegister, setIsRegister] = useState(false);
 
   return (
-    <>
+    <div className="space-x-2">
       <Button
         size="sm"
         className="h-7 rounded-md px-2"
@@ -82,7 +82,7 @@ export default function LoginButton() {
           </DialogTitle>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
 
@@ -102,8 +102,8 @@ function RegisterForm({ onSuccess }: FormProps) {
     mutationKey: ['register'],
     mutationFn: (form: RegisterForm) => registerUser(form),
     onSuccess: (data) => {
-      setUser({ role: 'viewer', email: data.data.user.email, name: data.data.user.name, avatar: '' });
-      setToken(data.data.token);
+      setUser({ email: data.data.email, name: data.data.name, id: data.data.id, phone: data.data.phone });
+      setToken(data.token);
       onSuccess();
       toast.success('تم تسجيل حسابكم و تسجيل الدخول');
     },
@@ -173,7 +173,7 @@ function LoginForm({ onSuccess }: FormProps) {
     mutationFn: (form: LoginForm) => loginUser(form),
     onSuccess: async (data) => {
       setToken(data.token);
-      setUser({ avatar: data.avatar, email: data.email, role: data.role, name: data.name });
+      setUser({ email: data.data.email, name: data.data.name, id: data.data.id, phone: data.data.phone });
       onSuccess();
       toast.success('تم تسجيل الدخول بنجاح');
     },

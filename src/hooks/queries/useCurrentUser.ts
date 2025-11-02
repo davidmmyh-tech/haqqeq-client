@@ -1,7 +1,7 @@
 import { CURRENT_USER_QUERY_KEY } from '@/constants/query-keys';
 import { getToken } from '@/lib/token';
 import type { User } from '@/schemas/types';
-import { getCurrenytUser } from '@/services/auth';
+import { getCurrentUser } from '@/services/auth';
 import { useQuery } from '@tanstack/react-query';
 
 type Props = {
@@ -12,8 +12,8 @@ export default function useCurrentUserQuery({ onSuccess }: Props) {
   return useQuery({
     queryKey: [CURRENT_USER_QUERY_KEY],
     queryFn: () =>
-      getCurrenytUser().then((data) => {
-        onSuccess?.(data);
+      getCurrentUser().then((data) => {
+        onSuccess?.(data.data);
         return null;
       }),
 

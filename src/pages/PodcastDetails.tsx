@@ -22,7 +22,7 @@ export default function PodcastDetailsPage() {
       queryKey: [INFINITE_QUERY_KEY, PODCAST_QUERY_KEY, `${id}`],
       queryFn: ({ pageParam }) => getPodcastDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.pagination.total / PAGE_LIMIT <= allPages.length) return undefined;
+        if (lastPage.pagination.total_items / PAGE_LIMIT <= allPages.length) return undefined;
         return allPages.length + 1;
       },
       initialPageParam: 1
@@ -30,16 +30,16 @@ export default function PodcastDetailsPage() {
 
   const episodes = data?.pages?.flatMap((p: any) => p.episodes ?? p.data ?? []) ?? [];
   const podcast = data?.pages?.[0].podcast ?? null;
-  const totalEpisodes = data?.pages?.[0].pagination.total ?? 0;
+  const totalEpisodes = data?.pages?.[0].pagination.total_items ?? 0;
 
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useDocumentHead({
-    title: `حقق - ${podcast?.title}`,
+    title: `حقق - ${podcast?.name}`,
     description: podcast?.description,
-    ogTitle: `حقق - ${podcast?.title}`,
+    ogTitle: `حقق - ${podcast?.name}`,
     ogDescription: podcast?.description
   });
 
@@ -48,12 +48,14 @@ export default function PodcastDetailsPage() {
       <div className="container my-8 space-y-10">
         <DefaultMotionElement as="header" className="flex flex-col gap-2 sm:flex-row">
           <Img
-            src={podcast?.cover_image}
-            alt={podcast?.title}
+            src={podcast?.image}
+            alt={podcast?.name}
+            loading="eager"
+            fetchPriority="high"
             className="aspect-square w-full shrink-0 rounded-xl object-cover sm:w-44"
           />
           <div className="space-y-2">
-            <h1 className="mb-4 text-[28px] font-medium">{podcast?.title}</h1>
+            <h1 className="mb-4 text-[28px] font-medium">{podcast?.name}</h1>
             <p className="text-muted flex items-center gap-2 text-sm">
               <span>من</span>
               <span>

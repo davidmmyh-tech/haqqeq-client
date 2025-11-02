@@ -21,7 +21,7 @@ export default function ReleasesSection() {
     >
       <div className="mx-auto grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-6 lg:grid-cols-5">
         {releases.map((release) => (
-          <SquareImage src={release.images[0]} alt={release.title} key={release.id} to={`/إصدارات/${release.id}`} />
+          <SquareImage src={release.image} alt={release.title} key={release.id} to={`/إصدارات/${release.id}`} />
         ))}
       </div>
     </DataWrapper>

@@ -1,18 +1,18 @@
 import ReleaseCard from '@/components/cards/ReleaseCard';
-import type { Release } from '@/schemas/types';
+import type { ReleaseListItem } from '@/schemas/types';
 
-export default function MoreRelesesSection({ releases }: { releases: Release[] }) {
+export default function MoreRelesesSection({ releases }: { releases: ReleaseListItem[] }) {
   return (
     <div className="grid grid-cols-1 gap-y-10 xl:grid-cols-2">
       {releases.map((release) => (
         <ReleaseCard
           key={release.id}
           id={release.id}
-          srcUrl={release.file_url}
-          imageSrc={release.images[0]}
+          srcUrl={release.pdf_url}
+          imageSrc={release.image}
           title={release.title}
-          description={release.description}
-          publishDate={release.created_at}
+          description={release.short_description}
+          publishDate={release.published_at}
         />
       ))}
     </div>

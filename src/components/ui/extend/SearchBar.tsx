@@ -88,7 +88,7 @@ export default function SearchBar() {
               {results?.releases?.data.map((release) => (
                 <SearchItem
                   key={release.id}
-                  imageUrl={release.images[0]}
+                  imageUrl={release.image}
                   name={release.title}
                   type="إصدار"
                   to={`/إصدارات/${release.id}`}
@@ -98,7 +98,7 @@ export default function SearchBar() {
               {results?.episodes?.data.map((ep) => (
                 <SearchItem
                   key={ep.id}
-                  imageUrl={ep.cover_image}
+                  imageUrl={ep.image}
                   name={ep.title}
                   type="حلقة"
                   to={`/البودكاست/الحلقات/${ep.id}`}
@@ -108,8 +108,8 @@ export default function SearchBar() {
               {results?.podcasts?.data.map((podcast) => (
                 <SearchItem
                   key={podcast.id}
-                  imageUrl={podcast.cover_image}
-                  name={podcast.title}
+                  imageUrl={podcast.image}
+                  name={podcast.name}
                   type="بودكاست"
                   to={`/البودكاست/${podcast.id}`}
                 />

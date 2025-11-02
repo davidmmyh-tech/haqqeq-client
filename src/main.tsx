@@ -23,6 +23,8 @@ import BlogCategoryPage from './pages/BlogCategory';
 import VideoDetailsPage from './pages/VideoDetails';
 import VideoCategoryPage from './pages/videoCategory';
 import EpisodeDetailsPage from './pages/EpisodeDetails';
+import UserGuard from './layouts/UserGuard';
+import ProfilePage from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -80,7 +82,17 @@ const router = createBrowserRouter([
           //Protected Routes
           {
             element: <UserInitRequiredGuard />,
-            children: []
+            children: [
+              {
+                element: <UserGuard />,
+                children: [
+                  {
+                    path: '/الملف-الشخصي',
+                    element: <ProfilePage />
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['dist', './TODO.ts', '**/node_modules/**']
+    ignores: ['dist', './api/*', '**/node_modules/**']
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

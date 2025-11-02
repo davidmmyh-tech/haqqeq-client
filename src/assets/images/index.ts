@@ -9,5 +9,6 @@ import fallbackImage from './image-fallback.jpg';
 import eye from './Eye.png';
 import thump from './thump.png';
 import star from './Star.png';
+import user from './user.png';
 
-export { star, eye, home, release, podcast, videos, blog, fallbackImage, logo, whiteLogo, thump };
+export { star, eye, home, release, podcast, videos, blog, fallbackImage, logo, whiteLogo, thump, user };

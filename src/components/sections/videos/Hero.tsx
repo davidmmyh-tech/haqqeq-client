@@ -5,9 +5,15 @@ import { VideoIcon } from '@/components/ui/icons';
 import VideoCard from '@/components/cards/VideoCard';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { Link } from 'react-router';
-import type { Video } from '@/schemas/types';
+import type { VideoListItem } from '@/schemas/types';
 
-export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo?: Video; moreVideos: Video[] }) {
+export default function VideosHeroSection({
+  heroVideo,
+  moreVideos
+}: {
+  heroVideo?: VideoListItem;
+  moreVideos: VideoListItem[];
+}) {
   return (
     <>
       <DefaultMotionElement className="mt-6 flex w-full flex-col-reverse items-start justify-between gap-2 md:flex-row md:items-end">
@@ -19,13 +25,13 @@ export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo
 
           <p className="mb-1">
             في{' '}
-            <Link to={`/الفيديوهات/تصنيف/${heroVideo?.category_id}`} className="font-bold">
-              {heroVideo?.category_name}
+            <Link to={`/الفيديوهات/تصنيف/${heroVideo?.category.id}`} className="font-bold">
+              {heroVideo?.category.name}
             </Link>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroVideo?.created_at)}</span>
+            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroVideo?.published_at)}</span>
           </p>
 
-          <ViewsBadge views={heroVideo?.views_count || 0} />
+          <ViewsBadge views={heroVideo?.views || 0} />
         </div>
 
         <Link
@@ -33,8 +39,10 @@ export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo
           className="relative aspect-video h-full w-full overflow-clip md:basis-5/12"
         >
           <Img
-            src={heroVideo?.image_path}
+            src={heroVideo?.image}
             alt={heroVideo?.title}
+            loading="eager"
+            fetchPriority="high"
             className="h-full w-full rounded-2xl object-cover object-top"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -48,10 +56,10 @@ export default function VideosHeroSection({ heroVideo, moreVideos }: { heroVideo
           <VideoCard
             key={video.id}
             id={video.id}
-            category={video.category_name}
-            categoryId={video.category_id}
-            publishDate={video.created_at}
-            thumbnail={video.image_path}
+            category={video.category.name}
+            categoryId={video.category.id}
+            publishDate={video.published_at}
+            thumbnail={video.image}
             title={video.title}
           />
         ))}

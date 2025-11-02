@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="flex w-full flex-wrap items-start justify-between gap-8 px-8 md:items-center">
           {/* Identity & Socials*/}
           <div className="flex flex-col">
-            <Logo variant="light" className="mb-12 w-36" />
+            <Logo variant="light" className="mb-12 h-24 w-36" />
             <div className="flex flex-col items-center">
               <h4 className="mb-4 text-xl font-bold">تابعنـــــــــــــــــــــا على</h4>
               <div className="flex gap-8">

@@ -14,7 +14,7 @@ export default function VideosPage() {
     queryKey: [VIDEOS_PAGE_QUERY_KEY],
     queryFn: () => getVideos({ page: 1, limit: 14 })
   });
-  const videos = data?.data.data ? [...data.data.data] : [];
+  const videos = data?.data ? [...data.data] : [];
 
   useDocumentHead({
     title: `حقق - الفيديوهات`,

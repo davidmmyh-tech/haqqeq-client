@@ -21,15 +21,16 @@ export default function PodcastDetailsPage() {
       queryKey: [INFINITE_QUERY_KEY, BLOG_CATEGORY_QUERY_KEY, `${id}`],
       queryFn: ({ pageParam }) => getBlogsCategoryDetails(id, { limit: PAGE_LIMIT, page: pageParam }),
       getNextPageParam: (lastPage, allPages) => {
-        if (lastPage.pagination.total / PAGE_LIMIT <= allPages.length) return undefined;
+        if (lastPage.pagination.total_items / PAGE_LIMIT <= allPages.length) return undefined;
         return allPages.length + 1;
       },
-      initialPageParam: 1
+      initialPageParam: 1,
+      throwOnError: true
     });
 
   const blogs = data?.pages?.flatMap((p) => p.blogs ?? []) ?? [];
   const category = data?.pages?.[0].category ?? null;
-  const totalBlogs = data?.pages?.[0].pagination.total ?? 0;
+  const totalBlogs = data?.pages?.[0].pagination.total_items ?? 0;
 
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -51,6 +52,8 @@ export default function PodcastDetailsPage() {
           <Img
             src={category?.image}
             alt={category?.name}
+            loading="eager"
+            fetchPriority="high"
             className="aspect-square w-full shrink-0 rounded-xl object-cover sm:w-44"
           />
           <div className="space-y-2">
@@ -72,7 +75,7 @@ export default function PodcastDetailsPage() {
           <p>مرتب حسب الأحدث</p>
         </div>
 
-        <MoreBlogsSection blogs={blogs} defaultCategory={{ id: category?.id, name: category?.name }} />
+        <MoreBlogsSection blogs={blogs} />
 
         {hasNextPage && (
           <SubmitButton isLoading={isFetching} className="mx-auto flex px-10" onClick={() => loadMore()}>

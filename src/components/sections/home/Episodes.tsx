@@ -29,12 +29,12 @@ export default function EpisodesSection() {
             <EpisodeCard
               key={ep.id}
               id={ep.id}
-              imageSrc={ep.cover_image}
-              category={ep.podcast?.title || ''}
-              categoryId={ep.podcast?.id || ''}
+              imageSrc={ep.image}
+              category={ep.podcast.name || ''}
+              categoryId={ep.podcast.id || ''}
               description={ep.description}
               title={ep.title}
-              publishDate={ep.created_at}
+              publishDate={ep.published_at}
             />
           ))}
         </div>
@@ -44,7 +44,7 @@ export default function EpisodesSection() {
             <SquareImage
               key={podcast.id}
               className="xl:w-56"
-              src={podcast.cover_image || ''}
+              src={podcast.image || ''}
               alt={podcast.title}
               to={`/البودكاست/${podcast.id}`}
               onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
