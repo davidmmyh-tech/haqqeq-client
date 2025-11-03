@@ -18,8 +18,8 @@ RewriteRule ^(api|admin)/(.*)$ api/public/index.php/$2 [L,QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
-# Rewrite all requests to index.html (for React SPA)
-RewriteRule ^(.*)$ index.html [QSA,L]
+# Rewrite all requests to /client/index.html (for React SPA in /client folder)
+RewriteRule ^(.*)$ /client/index.html [QSA,L]
 
 # Options
 Options -MultiViews
@@ -31,7 +31,7 @@ Header set X-Frame-Options "SAMEORIGIN"
 Header set Access-Control-Allow-Origin "*"
 
 # Handle errors
-ErrorDocument 404 /index.html
+ErrorDocument 404 /client/index.html
 
 # Cache control
 <FilesMatch "\.(html|htm)$">
