@@ -77,22 +77,12 @@ jobs:
             mkdir -p $BUILD_DIR/public_html_tmp
             mkdir -p $BUILD_DIR/public_html
 
-            # move uploaded files to tmp location
-            ts=$(date +%Y%m%d%H%M%S)
-            mkdir -p $BUILD_DIR/releases/public_html-$ts
-            rsync -a --delete $BUILD_DIR/public_html_tmp/ $BUILD_DIR/releases/public_html-$ts/
+            # Move build files directly to client folder
+            rsync -a --delete $BUILD_DIR/public_html_tmp/ $BUILD_DIR/public_html/client/
             rm -rf $BUILD_DIR/public_html_tmp
-
-            # Debug: Check release contents
-            echo "Contents of release directory:"
-            ls -la $BUILD_DIR/releases/public_html-$ts
 
             # point current to the new release
             ln -sfn $BUILD_DIR/releases/public_html-$ts $BUILD_DIR/public_html/client
-
-            # Debug: Check client symlink
-            echo "Contents of client (should show symlink and files if followed):"
-            ls -la $BUILD_DIR/public_html/client
 
             # ensure correct permissions
             chmod -R 755 $BUILD_DIR/public_html/client
