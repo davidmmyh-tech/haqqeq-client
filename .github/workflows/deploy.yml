@@ -56,7 +56,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 65002
           source: "dist/*"
-          target: "/home/u795350111/domains/haqqeq/public_html_tmp"
+          target: "/home/u795350111/domains/haqqeq.com/public_html_tmp"
           strip_components: 1
           debug: true
           timeout: 60s
@@ -71,7 +71,7 @@ jobs:
           port: 65002
           script: |
             set -euo pipefail
-            BUILD_DIR="/home/u795350111/domains/haqqeq"
+            BUILD_DIR="/home/u795350111/domains/haqqeq.com"
 
             # Create directories if they don't exist
             mkdir -p $BUILD_DIR/public_html_tmp
