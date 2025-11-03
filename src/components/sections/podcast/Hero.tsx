@@ -32,7 +32,10 @@ export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: Epis
         <p className="text-muted mb-6">{heroEpisode?.description}</p>
 
         <p className="inline-block">
-          في <span className="font-bold">{heroEpisode?.title}</span>
+          في{' '}
+          <Link to={`/البودكاست/${heroEpisode?.podcast?.id}`} className="font-bold">
+            {heroEpisode?.podcast?.name}
+          </Link>
         </p>
         <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroEpisode?.published_at)}</p>
 
