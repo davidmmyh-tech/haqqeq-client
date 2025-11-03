@@ -1,7 +1,5 @@
 import type { Category, EpisodeDetails, ReleaseDetails } from '@/schemas/types';
 import api from './api';
-
-// Common data structure for search results
 interface SearchResultData<T> {
   count: number;
   data: T[];
