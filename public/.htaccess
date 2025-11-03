@@ -19,9 +19,19 @@ RewriteRule ^(api|admin)/(.*)$ api/public/index.php/$2 [L,QSA]
 
 # Serve Laravel assets directly (for Vite builds in /build/)
 RewriteRule ^build/(.*)$ api/public/build/$1 [L]
+RewriteRule ^css/(.*)$ api/public/css/$1 [L]
+RewriteRule ^js/(.*)$ api/public/js/$1 [L]
 
 # Serve React assets directly from /client/assets/
 RewriteRule ^assets/(.*)$ /client/assets/$1 [L]
+
+# Serve React public assets from /client/ (e.g., favicon.ico, manifest.json, images)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(favicon\.ico|manifest\.json|robots\.txt|.*\.(png|jpg|jpeg|gif|svg|ico))$ /client/$1 [L]
+
+# Serve React fonts from /client/fonts/
+RewriteRule ^fonts/(.*)$ /client/fonts/$1 [L]
 
 # If the request is not for an existing file/directory/link
 RewriteCond %{REQUEST_FILENAME} !-f
