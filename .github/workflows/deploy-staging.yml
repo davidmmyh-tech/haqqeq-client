@@ -5,7 +5,7 @@ on:
     branches: ["staging"]
 
 concurrency:
-  group: deploy-haqqeq
+  group: deploy-haqqeq-staging
   cancel-in-progress: true
 
 jobs:
