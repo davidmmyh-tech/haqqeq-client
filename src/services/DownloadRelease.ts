@@ -1,3 +1,4 @@
+import { AxiosError, type AxiosResponse } from 'axios';
 import api from './api';
 
 export const downloadRelease = async (id: string | number, fileName?: string, openInNewTab = false) => {
@@ -8,6 +9,14 @@ export const downloadRelease = async (id: string | number, fileName?: string, op
       credentials: 'include'
     }
   });
+
+  if (res.headers['Content-Type'] !== 'application/pdf') {
+    throw new AxiosError('خطأ في تحميل الملف', 'BLOB_TYPE_MISMATCH', undefined, undefined, {
+      status: 401,
+      statusText: 'Unauthorized',
+      data: 'Invalid file type'
+    } as AxiosResponse);
+  }
 
   const blob = new Blob([res.data], { type: 'application/pdf' });
   const blobUrl = URL.createObjectURL(blob);
