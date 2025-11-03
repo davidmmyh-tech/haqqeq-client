@@ -3,18 +3,10 @@ import SectionHeader from '@/components/ui/extend/SectionHeader';
 import FormInput from '@/components/ui/extend/FormInput';
 import { useDocumentHead } from '@/hooks/useDocumentHead';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SubmitButton from '@/components/ui/submit-button';
 import SectionCard from '@/components/cards/SectionCard';
-
-const profileSchema = z.object({
-  name: z.string().min(3, 'الاسم يجب أن يكون 3 أحرف على الأقل'),
-  email: z.email('البريد الإلكتروني غير صالح'),
-  phone: z.string().optional()
-});
-
-type ProfileFormData = z.infer<typeof profileSchema>;
+import { profileSchema, type ProfileFormData } from '@/schemas/validation';
 
 export default function ProfilePage() {
   const {
@@ -49,6 +41,27 @@ export default function ProfilePage() {
           <FormInput label="البريد الإلكتروني" type="email" error={errors.email?.message} {...register('email')} />
 
           <FormInput label="رقم الهاتف" type="tel" error={errors.phone?.message} {...register('phone')} />
+
+          <FormInput
+            label="كلمة المرور القديمة"
+            type="password"
+            error={errors.oldPassword?.message}
+            {...register('oldPassword')}
+          />
+
+          <FormInput
+            label="كلمة المرور الجديدة"
+            type="password"
+            error={errors.newPassword?.message}
+            {...register('newPassword')}
+          />
+
+          <FormInput
+            label="تأكيد كلمة المرور"
+            type="password"
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword')}
+          />
 
           <SubmitButton type="submit" className="w-full">
             حفظ التغييرات

@@ -2,18 +2,18 @@ import type { EpisodeDetails, EpisodeListItem, Pagination } from '@/schemas/type
 import api from './api';
 
 type EpisodesResponse = {
-  status: string;
+  success: boolean;
   data: EpisodeListItem[];
   pagination: Pagination;
 };
 
 type EpisodeDetailsResponse = {
-  status: string;
+  success: boolean;
   data: EpisodeDetails;
 };
 
 export async function getEpisodes({ page, limit = 5 }: { page: number; limit?: number }) {
-  return await api.get<EpisodesResponse>(`/api/episodes`, { params: { page, limit } }).then((res) => res.data.data);
+  return api.get<EpisodesResponse>(`/api/episodes`, { params: { page, limit } }).then((res) => res.data.data);
 }
 
 export async function getEpisodeDetails(id: string | number) {

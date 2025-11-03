@@ -35,6 +35,21 @@ export const contactSchema = z.object({
   message: z.string().min(15, { message: 'محتوي الرساله يجب ان يكون هادف و مفصل' })
 });
 
+export const profileSchema = z
+  .object({
+    name: z.string().min(3, 'الاسم يجب أن يكون 3 أحرف على الأقل'),
+    email: z.email('البريد الإلكتروني غير صالح'),
+    phone: z.string().optional(),
+    oldPassword: z.string().min(1, 'كلمة المرور القديمة مطلوبة'),
+    newPassword: z.string().min(8, 'كلمة المرور الجديدة يجب أن تكون 8 أحرف على الأقل'),
+    confirmPassword: z.string()
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'كلمات المرور غير متطابقة',
+    path: ['confirmPassword']
+  });
+
+export type ProfileFormData = z.infer<typeof profileSchema>;
 export type RegisterForm = z.infer<typeof registerSchema>;
 export type LoginForm = z.infer<typeof loginSchema>;
 export type SubscribeForm = z.infer<typeof subscribeSchema>;

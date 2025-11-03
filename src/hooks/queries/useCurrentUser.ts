@@ -13,7 +13,7 @@ export default function useCurrentUserQuery({ onSuccess }: Props) {
     queryKey: [CURRENT_USER_QUERY_KEY],
     queryFn: () =>
       getCurrentUser().then((data) => {
-        onSuccess?.(data.data);
+        onSuccess?.({ id: data.id, name: data.name, email: data.email, phone: data.phone_number || '' });
         return null;
       }),
 

@@ -6,7 +6,7 @@ export interface Pagination {
 }
 
 export interface User {
-  id: number;
+  id: number | string;
   name: string;
   email: string;
   phone: string;
@@ -19,6 +19,13 @@ export interface Category {
   description: string;
 }
 
+export interface Podcast {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+}
+
 export interface ReleaseListItem {
   id: number;
   title: string;
@@ -26,11 +33,19 @@ export interface ReleaseListItem {
   image: string;
   views: number;
   published_at: string;
-  pdf_url: string;
 }
 
-export interface ReleaseDetails extends ReleaseListItem {
+export interface ReleaseDetails extends Omit<ReleaseListItem, 'image'> {
+  success: boolean;
+  id: number;
+  title: string;
   description: string;
+  images: string[];
+  views: number;
+  created_at: string;
+  has_pdf: boolean;
+  has_excel: boolean;
+  has_powerbi: boolean;
 }
 
 export interface BlogListItem {
@@ -39,7 +54,8 @@ export interface BlogListItem {
   description: string;
   views: number;
   image: string;
-  published_at: string;
+  published_at?: string;
+  publish_date: string;
   category: {
     id: number;
     name: string;
@@ -58,6 +74,7 @@ export interface EpisodeListItem {
   title: string;
   description: string;
   views: number;
+  views_count?: number;
   image: string;
   audio_url: string;
   published_at: string;

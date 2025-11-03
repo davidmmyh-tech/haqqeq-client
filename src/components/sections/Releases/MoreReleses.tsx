@@ -8,7 +8,6 @@ export default function MoreRelesesSection({ releases }: { releases: ReleaseList
         <ReleaseCard
           key={release.id}
           id={release.id}
-          srcUrl={release.pdf_url}
           imageSrc={release.image}
           title={release.title}
           description={release.short_description}

@@ -1,37 +1,25 @@
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
 import Img from '../ui/extend/Img';
 import { Link } from 'react-router';
-import { memo, useCallback, useState } from 'react';
+import { memo } from 'react';
 import usePrefetchRelease from '@/hooks/queries/prefetch/usePrefetchRelease';
 import SubmitButton from '../ui/submit-button';
-import { DownloadRelease } from '@/services/DownloadRelease';
-import { toast } from 'react-toastify';
+import { useDownloadRelease } from '@/hooks/queries/useDownloadRelease';
 
 type Props = {
   title: string;
   description: string;
   imageSrc: string | null;
   publishDate: string;
-  srcUrl: string;
   id: string | number;
 };
 
-const ReleaseCard = memo(({ title, description, imageSrc, srcUrl, id }: Props) => {
+const ReleaseCard = memo(({ title, description, imageSrc, id }: Props) => {
   const { handlePrefetchRelease } = usePrefetchRelease();
-  const [busy, setBusy] = useState(false);
 
-  const handleDownload = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (!srcUrl) return;
-      setBusy(true);
-      await DownloadRelease(srcUrl, `${title}.pdf`, false).catch(() =>
-        toast.error('حدث خطأ أثناء التحميل. حاول مرة أخرى لاحقاً.')
-      );
-      setBusy(false);
-    },
-    [srcUrl, title]
-  );
+  const downloadReleaseMutation = useDownloadRelease({});
+  const handleDownload = () => downloadReleaseMutation.mutate({ id, title });
+  const busy = downloadReleaseMutation.isPending;
 
   return (
     <DefaultMotionDiv
@@ -62,7 +50,7 @@ const ReleaseCard = memo(({ title, description, imageSrc, srcUrl, id }: Props) =
           </SubmitButton>
 
           <a
-            href={srcUrl}
+            href={'/'}
             target="_blank"
             rel="noopener noreferrer"
             className="border-foreground text-foreground inline-flex h-11 w-32 justify-center rounded-md border-2 bg-transparent py-1 text-3xl hover:no-underline"

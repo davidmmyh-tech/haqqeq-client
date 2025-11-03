@@ -3,24 +3,25 @@ import DataWrapper from '@/layouts/DataWrapper';
 import SquareImage from '@/components/cards/SquareImage';
 import EpisodeCard from '@/components/cards/EpisodeCard';
 import { getEpisodes } from '@/services/getEpisodes';
-import usePrefetchPodcast from '@/hooks/queries/prefetch/usePrefetchPodcast';
+import usePrefetchEpisode from '@/hooks/queries/prefetch/usePrefetchEpisode';
 
 export default function EpisodesSection() {
-  const { handlePrefetchPodcast } = usePrefetchPodcast();
+  const { handlePrefetchEpisode } = usePrefetchEpisode();
+
   const { data, isPending, isError, refetch, isFetching } = useQuery({
-    queryKey: ['new-episodes'],
+    queryKey: ['recent-home-episodes'],
     queryFn: () => getEpisodes({ page: 1, limit: 8 })
   });
-  const episodes = data ? [...data] : [];
-  const mainEpisodes = data && data?.length >= 2 ? [episodes[0], episodes[1]] : [];
-  episodes.splice(0, 2);
+  const allEpisodes = data ? [...data] : [];
+  const mainEpisodes = allEpisodes.splice(0, 2);
+  const remainingEpisodes = [...allEpisodes];
 
   return (
     <DataWrapper
       isError={isError}
       isPending={isPending}
       retry={refetch}
-      isEmpty={!episodes.length}
+      isEmpty={!data?.length}
       isRefetching={isFetching}
     >
       <div className="flex w-full flex-col items-center justify-between gap-8 py-10 xl:flex-row xl:gap-1">
@@ -40,14 +41,14 @@ export default function EpisodesSection() {
         </div>
 
         <div className="grid shrink-0 grid-cols-3 gap-2 sm:gap-6">
-          {episodes.map((podcast) => (
+          {remainingEpisodes.map((ep) => (
             <SquareImage
-              key={podcast.id}
+              key={ep.id}
               className="xl:w-56"
-              src={podcast.image || ''}
-              alt={podcast.title}
-              to={`/البودكاست/${podcast.id}`}
-              onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
+              src={ep.image || ''}
+              alt={ep.title}
+              to={`/البودكاست/${ep.id}`}
+              onMouseEnter={() => handlePrefetchEpisode(ep.id)}
             />
           ))}
         </div>

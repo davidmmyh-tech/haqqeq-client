@@ -88,7 +88,7 @@ export default function SearchBar() {
               {results?.releases?.data.map((release) => (
                 <SearchItem
                   key={release.id}
-                  imageUrl={release.image}
+                  imageUrl={release.images[0]}
                   name={release.title}
                   type="إصدار"
                   to={`/إصدارات/${release.id}`}

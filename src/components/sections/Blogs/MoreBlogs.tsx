@@ -13,7 +13,7 @@ export default function MoreBlogsSection({ blogs }: { blogs: BlogListItem[] }) {
           categoryId={blog.category.id}
           description={blog.description}
           title={blog.title}
-          publishDate={blog.published_at}
+          publishDate={blog.published_at || blog.publish_date}
         />
       ))}
     </div>

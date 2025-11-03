@@ -13,7 +13,7 @@ export default function MainBlogsSection({ blogs }: { blogs: BlogListItem[] }) {
           categoryId={blog.category.id}
           description={blog.description}
           title={blog.title}
-          publishDate={blog.published_at}
+          publishDate={blog.published_at || blog.publish_date}
           views={blog.views}
         />
       ))}

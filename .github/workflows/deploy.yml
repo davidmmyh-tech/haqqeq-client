@@ -59,8 +59,8 @@ jobs:
           target: '/home/u795350111/domains/lightgreen-jay-747295.hostingersite.com/public_html'
           strip_components: 1
           debug: true
-          timeout: 60s # Add longer timeout
-          command_timeout: 20m # Add command timeout
+          timeout: 60s
+          command_timeout: 20m
 
       - name: Activate release (atomic swap)
         uses: appleboy/ssh-action@v1.0.3
@@ -89,6 +89,6 @@ jobs:
             # ensure correct permissions
             chmod -R 755 $BUILD_DIR/public_html
             chmod -R 755 $BUILD_DIR/releases
-          debug: true # Add debug flag
+          debug: true
           timeout: 60s
           command_timeout: 20m

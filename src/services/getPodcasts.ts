@@ -1,14 +1,14 @@
-import type { Category, EpisodeListItem, Pagination } from '@/schemas/types';
+import type { EpisodeListItem, Pagination, Podcast } from '@/schemas/types';
 import api from './api';
 
 type PodcastsResponse = {
   success: boolean;
-  data: Category[];
+  data: Podcast[];
   pagination: Pagination;
 };
 
 type PodcastResponse = {
-  podcast: Category;
+  podcast: Podcast;
   episodes: EpisodeListItem[];
   pagination: Pagination;
 };

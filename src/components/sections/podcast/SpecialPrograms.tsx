@@ -44,7 +44,7 @@ export default function SpecialProgramsSection() {
             <SquareImage
               key={podcast.id}
               src={podcast.image}
-              alt={podcast.name}
+              alt={podcast.title}
               to={`/البودكاست/${podcast?.id}`}
               onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
             />
@@ -57,7 +57,7 @@ export default function SpecialProgramsSection() {
               <SquareImage
                 key={podcast.id}
                 src={podcast.image}
-                alt={podcast.name}
+                alt={podcast.title}
                 to={`/البودكاست/${podcast?.id}`}
                 onMouseEnter={() => handlePrefetchPodcast(podcast.id)}
               />

@@ -42,7 +42,9 @@ export default function BlogsHeroSection({ heroBlog }: { heroBlog: BlogListItem 
             {heroBlog.category.name}
           </Link>
         </p>
-        <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog.published_at)}</p>
+        <p className="text-muted ms-3 inline-block text-sm">
+          {parsedDate(heroBlog.published_at || heroBlog.publish_date)}
+        </p>
 
         <ViewsBadge views={heroBlog.views} />
       </div>

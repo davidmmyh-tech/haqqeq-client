@@ -5,20 +5,16 @@ import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import SubmitButton from '@/components/ui/submit-button';
 import { MORE_RELEASES_QUERY_KEY, RELEASE_QUERY_KEY } from '@/constants/query-keys';
+import { useDownloadRelease } from '@/hooks/queries/useDownloadRelease';
 import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionDiv from '@/layouts/DefaultMotionElement';
-import { DownloadRelease } from '@/services/DownloadRelease';
 import { getReleaseDetails, getReleases } from '@/services/getReleases';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
 import { useParams } from 'react-router';
-import { toast } from 'react-toastify';
 
 export default function ReleaseDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
-  const [busy, setBusy] = useState(false);
-
   const { data, isError, isPending, refetch, isFetching } = useQuery({
     queryKey: [RELEASE_QUERY_KEY, id],
     queryFn: () => getReleaseDetails(id),
@@ -26,22 +22,12 @@ export default function ReleaseDetailsPage() {
     retry: 0
   });
 
-  const release = data?.data;
+  const release = data;
+  const downloadReleaseMutation = useDownloadRelease({});
+  const handleDownload = () => downloadReleaseMutation.mutate({ id: release?.id || '', title: release?.title || '' });
+  const busy = downloadReleaseMutation.isPending;
 
-  const handleDownload = useCallback(
-    async (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (!release?.pdf_url) return;
-      setBusy(true);
-      await DownloadRelease(release.pdf_url, `${release.title}.pdf`, false).catch(() =>
-        toast.error('حدث خطأ أثناء التحميل. حاول مرة أخرى لاحقاً.')
-      );
-      setBusy(false);
-    },
-    [release?.pdf_url, release?.title]
-  );
-
-  const moreReleases = useQuery({
+  const moreReleasesQuery = useQuery({
     queryKey: [MORE_RELEASES_QUERY_KEY],
     queryFn: () => getReleases({ page: 1, limit: 8 })
   });
@@ -59,7 +45,7 @@ export default function ReleaseDetailsPage() {
         <header className="bg-accent py-12">
           <DefaultMotionDiv className="container flex flex-col items-center gap-4 md:flex-row">
             <Img
-              src={release?.image}
+              src={release?.images[0]}
               alt={release?.title}
               loading="eager"
               fetchPriority="high"
@@ -96,7 +82,7 @@ export default function ReleaseDetailsPage() {
         <section>
           <div className="container space-y-8">
             <SectionHeader icon={releaseIcon} title="المزيد من الإصدارات" as="h4" />
-            <MoreRelesesSection releases={moreReleases.data ?? []} />
+            <MoreRelesesSection releases={moreReleasesQuery.data ?? []} />
           </div>
         </section>
       </div>

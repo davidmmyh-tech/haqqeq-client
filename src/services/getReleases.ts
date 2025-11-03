@@ -9,11 +9,14 @@ type ReleasesResponse = {
 
 type ReleaseDetailsResponse = {
   success: boolean;
-  data: ReleaseDetails;
-};
+} & ReleaseDetails;
 
 export async function getReleases({ page, limit = 5 }: { page: number; limit: number }) {
-  return api.get<ReleasesResponse>('/api/releases', { params: { page, limit } }).then((res) => res.data.data);
+  return api
+    .get<ReleasesResponse>('/api/releases', {
+      params: { page, limit }
+    })
+    .then((res) => res.data.data);
 }
 
 export async function getReleaseDetails(id: string | number) {

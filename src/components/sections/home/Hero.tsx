@@ -44,7 +44,9 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
             <Link to={`/المدونة/تصنيف/${heroBlog?.category.id}`} className="font-bold">
               {heroBlog?.category.name}
             </Link>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroBlog?.published_at)}</span>
+            <span className="text-muted ms-3 inline-block text-sm">
+              {parsedDate(heroBlog?.published_at || heroBlog?.publish_date)}
+            </span>
           </p>
         </div>
       </DefaultMotionDiv>
@@ -58,7 +60,7 @@ export default function HeroSection({ heroBlog, moreBlogs }: Props) {
                 description={blog.description.slice(0, 100)}
                 title={blog.title}
                 imageSrc={blog.image}
-                publishDate={blog.published_at}
+                publishDate={blog.published_at || blog.publish_date}
                 category={blog.category.name}
                 categoryId={blog.category.id}
               />

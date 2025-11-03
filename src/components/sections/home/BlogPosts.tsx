@@ -13,7 +13,7 @@ export default function BlogPostsSection({ blogs }: { blogs: BlogListItem[] }) {
           description={post.description.slice(0, 150) + '...'}
           category={post.category.name}
           categoryId={post.category.id}
-          publishDate={post.published_at}
+          publishDate={post.published_at || post.publish_date}
         />
       ))}
     </div>

@@ -102,7 +102,7 @@ function RegisterForm({ onSuccess }: FormProps) {
     mutationKey: ['register'],
     mutationFn: (form: RegisterForm) => registerUser(form),
     onSuccess: (data) => {
-      setUser({ email: data.data.email, name: data.data.name, id: data.data.id, phone: data.data.phone });
+      setUser({ email: data.user.email, name: data.user.name, id: data.user.id, phone: data.user.phone_number });
       setToken(data.token);
       onSuccess();
       toast.success('تم تسجيل حسابكم و تسجيل الدخول');
@@ -173,7 +173,7 @@ function LoginForm({ onSuccess }: FormProps) {
     mutationFn: (form: LoginForm) => loginUser(form),
     onSuccess: async (data) => {
       setToken(data.token);
-      setUser({ email: data.data.email, name: data.data.name, id: data.data.id, phone: data.data.phone });
+      setUser({ email: data.email, name: data.name, id: '', phone: '' });
       onSuccess();
       toast.success('تم تسجيل الدخول بنجاح');
     },

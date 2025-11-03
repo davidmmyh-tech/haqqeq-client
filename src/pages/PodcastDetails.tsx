@@ -37,9 +37,9 @@ export default function PodcastDetailsPage() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useDocumentHead({
-    title: `حقق - ${podcast?.name}`,
+    title: `حقق - ${podcast?.title}`,
     description: podcast?.description,
-    ogTitle: `حقق - ${podcast?.name}`,
+    ogTitle: `حقق - ${podcast?.title}`,
     ogDescription: podcast?.description
   });
 
@@ -49,13 +49,13 @@ export default function PodcastDetailsPage() {
         <DefaultMotionElement as="header" className="flex flex-col gap-2 sm:flex-row">
           <Img
             src={podcast?.image}
-            alt={podcast?.name}
+            alt={podcast?.title}
             loading="eager"
             fetchPriority="high"
             className="aspect-square w-full shrink-0 rounded-xl object-cover sm:w-44"
           />
           <div className="space-y-2">
-            <h1 className="mb-4 text-[28px] font-medium">{podcast?.name}</h1>
+            <h1 className="mb-4 text-[28px] font-medium">{podcast?.title}</h1>
             <p className="text-muted flex items-center gap-2 text-sm">
               <span>من</span>
               <span>

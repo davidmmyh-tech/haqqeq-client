@@ -28,7 +28,7 @@ const DetailedCard = memo(
             {title}
           </Link>
 
-          <p className="text-muted mb-4 text-[15px]">{description.slice(0, 120)}...</p>
+          <p className="text-muted mb-4 text-[15px]">{(description || 'لا يوجد وصف ').slice(0, 120)}...</p>
 
           <p className="inline-block">
             في
