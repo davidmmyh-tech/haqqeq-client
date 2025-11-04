@@ -7,14 +7,35 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import SubmitButton from '@/components/ui/submit-button';
 import SectionCard from '@/components/cards/SectionCard';
 import { profileSchema, type ProfileFormData } from '@/schemas/validation';
+import { useMutation } from '@tanstack/react-query';
+import { updateProfile } from '@/services/updateProfile';
+import { useState } from 'react';
+import { isAxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import ErrorMessage from '@/components/ui/extend/error-message';
 
 export default function ProfilePage() {
+  const [error, setError] = useState<null | string>();
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema)
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['update-profile'],
+    mutationFn: (form: ProfileFormData) => updateProfile(form),
+    onSuccess: () => toast.success('تم تحديث الملف الشخصي بنجاح'),
+    onError: (error) => {
+      if (isAxiosError(error)) {
+        if (error.response?.status === 405) {
+          return setError('البريد مستخدم من قبل');
+        }
+        setError(error.response?.data?.message ?? 'خطاء غير معروف حاول لاحقا');
+      }
+    }
   });
 
   useDocumentHead({
@@ -25,7 +46,7 @@ export default function ProfilePage() {
   });
 
   const onSubmit = (data: ProfileFormData) => {
-    return data;
+    mutate(data);
   };
 
   return (
@@ -63,7 +84,9 @@ export default function ProfilePage() {
             {...register('confirmPassword')}
           />
 
-          <SubmitButton type="submit" className="w-full">
+          <ErrorMessage error={error} />
+
+          <SubmitButton type="submit" className="w-full" isLoading={isPending}>
             حفظ التغييرات
           </SubmitButton>
         </form>

@@ -8,6 +8,7 @@ import { useUserState } from '@/context/UserProvider';
 import JoinButton from '@/components/ui/extend/JoinButton';
 import LogoutButton from '@/components/ui/extend/LogoutButton';
 import LoginButtons from '@/components/ui/extend/LoginButtons';
+import ProfileButton from '../ui/extend/ProfileButton';
 
 type Props = { isOpen: boolean; onClose: () => void };
 
@@ -42,6 +43,7 @@ export default function SideNavBar({ isOpen, onClose }: Props) {
           {user ? (
             <>
               <JoinButton />
+              <ProfileButton />
               <LogoutButton />
             </>
           ) : (
