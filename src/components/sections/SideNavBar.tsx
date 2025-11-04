@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
-import NavItems from '../../ui/extend/NavItems';
-import HSplit from '../../ui/h-split';
+import NavItems from '../ui/extend/NavItems';
+import HSplit from '../ui/h-split';
 import { cn } from '@/lib/utils';
 import { useRef } from 'react';
 import useOutsideClick from '@/hooks/useOutsideClick';

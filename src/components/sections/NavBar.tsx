@@ -5,8 +5,8 @@ import NavItems from '@/components/ui/extend/NavItems';
 import HSplit from '@/components/ui/h-split';
 import LoginButtons from '@/components/ui/extend/LoginButtons';
 import { useUserState } from '@/context/UserProvider';
-import LogoutButton from '@/components/ui/extend/LogoutButton';
 import JoinButton from '@/components/ui/extend/JoinButton';
+import UserMenu from '../ui/extend/UserMenu';
 
 type Props = {
   onOpenSideBar: () => void;
@@ -32,7 +32,7 @@ export default function NavBar({ onOpenSideBar }: Props) {
             {user ? (
               <>
                 <JoinButton />
-                <LogoutButton />
+                <UserMenu />
               </>
             ) : (
               <LoginButtons />

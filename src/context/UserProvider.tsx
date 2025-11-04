@@ -8,14 +8,14 @@ type Props = {
 };
 
 type ContextProvidedValues = {
-  user: User | undefined;
-  setUser: Dispatch<React.SetStateAction<User | undefined>>;
+  user: User | null | undefined;
+  setUser: Dispatch<React.SetStateAction<User | null | undefined>>;
   isInit: boolean;
 };
 const userContext = createContext<ContextProvidedValues | undefined>(undefined);
 
 export default function UserProvider({ children }: Props) {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>();
 
   const verifyQuery = useCurrentUserQuery({ onSuccess: setUser });
 
