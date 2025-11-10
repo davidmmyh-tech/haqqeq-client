@@ -39,9 +39,9 @@ export default function PodcastsHeroSection({ heroEpisode }: { heroEpisode: Epis
         </p>
         <p className="text-muted ms-3 inline-block text-sm">{parsedDate(heroEpisode?.published_at)}</p>
 
-        <ViewsBadge views={heroEpisode?.views} />
+        <ViewsBadge views={heroEpisode?.views_count || heroEpisode?.views} />
 
-        <HeroAudio src={heroEpisode?.audio_url ?? ''} />
+        <HeroAudio src={heroEpisode?.audio_url} />
       </div>
     </DefaultMotionDiv>
   );

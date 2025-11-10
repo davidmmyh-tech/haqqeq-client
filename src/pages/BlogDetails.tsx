@@ -79,7 +79,11 @@ export default function BlogDetailsPage() {
           </div>
         </section>
 
-        {blog?.announcement && <InnerHTML content={blog.announcement} />}
+        {blog?.announcement && (
+          <div className="container">
+            <InnerHTML content={blog.announcement} />
+          </div>
+        )}
 
         <section>
           <div className="container">

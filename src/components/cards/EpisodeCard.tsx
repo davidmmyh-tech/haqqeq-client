@@ -4,7 +4,7 @@ import usePrefetchEpisode from '@/hooks/queries/prefetch/usePrefetchEpisode';
 
 type Props = { id: string | number; categoryId: string | number } & Omit<DetailedCardProps, 'to' | 'categoryTo'>;
 
-export default function PodcastCard({ id, categoryId, ...props }: Props) {
+export default function EpisodeCard({ id, categoryId, ...props }: Props) {
   const { handlePrefetchEpisode } = usePrefetchEpisode();
 
   return (
