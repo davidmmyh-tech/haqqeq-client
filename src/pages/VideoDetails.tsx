@@ -54,12 +54,12 @@ export default function VideoDetailsPage() {
             <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.published_at)}</span>
           </DefaultMotionElement>
 
-          <DefaultMotionElement className="mt-8 aspect-video max-h-[80vh] w-full overflow-clip rounded-2xl bg-black">
+          <DefaultMotionElement className="mt-8 flex justify-center">
             <video
               controls
               src={remote(`${video?.video_url}`)}
               poster={video?.image}
-              className="h-full w-full bg-black object-contain"
+              className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
             />
           </DefaultMotionElement>
         </header>
