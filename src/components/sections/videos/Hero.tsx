@@ -28,7 +28,7 @@ export default function VideosHeroSection({
             <Link to={`/الفيديوهات/تصنيف/${heroVideo?.category.id}`} className="font-bold">
               {heroVideo?.category.name}
             </Link>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroVideo?.published_at)}</span>
+            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(heroVideo?.created_at)}</span>
           </p>
 
           <ViewsBadge views={heroVideo?.views || 0} />
@@ -58,7 +58,7 @@ export default function VideosHeroSection({
             id={video.id}
             category={video.category.name}
             categoryId={video.category.id}
-            publishDate={video.published_at}
+            publishDate={video.created_at}
             thumbnail={video.image}
             title={video.title}
           />

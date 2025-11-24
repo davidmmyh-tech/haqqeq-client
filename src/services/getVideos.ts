@@ -102,7 +102,7 @@ export async function getVideosCategoryDetails(id: string | number, params?: { l
     description: video.description,
     views: video.views_count,
     image: video.image_path,
-    published_at: video.created_at,
+    created_at: video.created_at,
     category: {
       id: video.video_category_id,
       name: data.name

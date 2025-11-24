@@ -13,7 +13,7 @@ export default function MoreVideosSection({ videos }: { videos: VideoListItem[] 
           description={video.description}
           category={video.category.name}
           categoryId={video.category.id}
-          publishDate={video.published_at}
+          publishDate={video.created_at}
         />
       ))}
     </div>

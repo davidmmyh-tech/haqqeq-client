@@ -95,7 +95,7 @@ export interface VideoListItem {
   description: string;
   views: number;
   image: string;
-  published_at: string;
+  created_at: string;
   category: {
     id: number;
     name: string;
@@ -110,7 +110,7 @@ export interface VideoDetails extends VideoListItem {
   views: number;
   image: string;
   video_url: string;
-  published_at: string;
+  created_at: string;
   category: {
     id: number;
     name: string;

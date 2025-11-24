@@ -29,7 +29,7 @@ export default function VideosSection() {
             category={video.category.name}
             categoryId={video.category.id}
             title={video.title}
-            publishDate={video.published_at}
+            publishDate={video.created_at}
           />
         ))}
       </div>

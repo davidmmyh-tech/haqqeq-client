@@ -49,7 +49,7 @@ export default function VideoDetailsPage() {
 
         <DefaultMotionElement as="p">
           في <span className="font-bold">{video?.category.name}</span>
-          <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.published_at)}</span>
+          <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.created_at)}</span>
         </DefaultMotionElement>
 
         <DefaultMotionElement className="mt-8 flex justify-center">
