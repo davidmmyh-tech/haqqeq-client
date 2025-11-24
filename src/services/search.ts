@@ -1,4 +1,3 @@
-import type { Category, EpisodeDetails, ReleaseDetails } from '@/schemas/types';
 import api from './api';
 interface SearchResultData<T> {
   count: number;
@@ -12,45 +11,46 @@ interface FullSearchResponse {
   matched_tables: number;
   total_results: number;
   results: {
+    blog_categories: SearchResultData<{
+      id: number;
+      name: string;
+      image_path: string;
+    }>;
+    video_categories: SearchResultData<{
+      id: number;
+      name: string;
+      image_path: string;
+    }>;
     blogs?: SearchResultData<{
       id: number;
-      header_image: string;
-      user_id: number;
       title: string;
-      description: string;
-      content: string;
-      category_id: number;
-      status: 'published';
-      publish_date: string | null;
-      views: number;
       image: string;
-      announcement: string;
-      footer: string;
-      created_at: string;
-      updated_at: string;
     }>;
     categories?: SearchResultData<{
       id: number;
       name: string;
-      slug: string;
-      description: string;
-      created_at: string;
-      updated_at: string;
+      image: string;
     }>;
-    releases?: SearchResultData<ReleaseDetails>;
-    doc_videos?: SearchResultData<{
+    releases?: SearchResultData<{
       id: number;
       title: string;
-      description: string;
-      views_count: number;
-      category_id: string;
-      image_path: string;
-      video_path: string;
-      created_at: string;
-      updated_at: string;
+      images: string[];
     }>;
-    episodes?: SearchResultData<EpisodeDetails>;
-    podcasts?: SearchResultData<Category>;
+    videos?: SearchResultData<{
+      id: number;
+      title: string;
+      image_path: string;
+    }>;
+    episodes?: SearchResultData<{
+      id: number;
+      title: string;
+      cover_image: string;
+    }>;
+    podcasts?: SearchResultData<{
+      id: number;
+      title: string;
+      cover_image: string;
+    }>;
   };
 }
 

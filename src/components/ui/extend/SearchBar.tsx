@@ -29,8 +29,9 @@ export default function SearchBar() {
   const isEmpty =
     query.length > 0 &&
     !results?.blogs &&
+    !results?.blog_categories &&
     !results?.releases &&
-    !results?.doc_videos &&
+    !results?.videos &&
     !results?.episodes &&
     !results?.podcasts;
 
@@ -98,7 +99,7 @@ export default function SearchBar() {
               {results?.episodes?.data.map((ep) => (
                 <SearchItem
                   key={ep.id}
-                  imageUrl={ep.image}
+                  imageUrl={ep.cover_image}
                   name={ep.title}
                   type="حلقة"
                   to={`/البودكاست/الحلقات/${ep.id}`}
@@ -108,14 +109,14 @@ export default function SearchBar() {
               {results?.podcasts?.data.map((podcast) => (
                 <SearchItem
                   key={podcast.id}
-                  imageUrl={podcast.image}
-                  name={podcast.name}
+                  imageUrl={podcast.cover_image}
+                  name={podcast.title}
                   type="بودكاست"
                   to={`/البودكاست/${podcast.id}`}
                 />
               ))}
 
-              {results?.doc_videos?.data.map((video) => (
+              {results?.videos?.data.map((video) => (
                 <SearchItem
                   key={video.id}
                   imageUrl={video.image_path}
@@ -132,6 +133,26 @@ export default function SearchBar() {
                   name={blog.title}
                   type="مدونة"
                   to={`/المدونة/${blog.id}`}
+                />
+              ))}
+
+              {results?.blog_categories?.data.map((blogCategory) => (
+                <SearchItem
+                  key={blogCategory.id}
+                  imageUrl={blogCategory.image_path}
+                  name={blogCategory.name}
+                  type="نشرة"
+                  to={`/المدونة/تصنيف/${blogCategory.id}`}
+                />
+              ))}
+
+              {results?.video_categories?.data.map((videoCategory) => (
+                <SearchItem
+                  key={videoCategory.id}
+                  imageUrl={videoCategory.image_path}
+                  name={videoCategory.name}
+                  type="برامج فيديوهات"
+                  to={`/الفيديوهات/تصنيف/${videoCategory.id}`}
                 />
               ))}
             </ul>

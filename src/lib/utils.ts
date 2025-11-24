@@ -28,7 +28,8 @@ export function formatDuration(sec: number | null) {
 
 export function remote(path: string | null | undefined) {
   if (path && path.includes('://')) return path;
-  return `${BASE_URL}/${path}`;
+  if (path?.includes('storage/')) return `${BASE_URL}/${path}`;
+  return `${BASE_URL}/storage/${path}`;
 }
 
 export function isHere(to: string, location: string) {
