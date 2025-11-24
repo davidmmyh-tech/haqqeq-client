@@ -51,7 +51,7 @@ export default function VideoCategoryPage() {
       <div className="container my-8 space-y-10">
         <DefaultMotionElement as="header" className="flex flex-col gap-2 sm:flex-row">
           <Img
-            src={category?.image}
+            src={'storage/' + category?.image}
             alt={category?.name}
             loading="eager"
             fetchPriority="high"

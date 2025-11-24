@@ -43,7 +43,7 @@ export default function SpecialVideoProgramsSection() {
           {mainCategories.map((category) => (
             <SquareImage
               key={category.id}
-              src={category.image}
+              src={'storage/' + category.image_path}
               alt={category.name}
               to={`/الفيديوهات/تصنيف/${category?.id}`}
               onMouseEnter={() => handlePrefetchVideoCategory(category.id)}
@@ -56,7 +56,7 @@ export default function SpecialVideoProgramsSection() {
             {categories.map((category) => (
               <SquareImage
                 key={category.id}
-                src={category.image}
+                src={'storage/' + category.image_path}
                 alt={category.name}
                 to={`/الفيديوهات/تصنيف/${category?.id}`}
                 onMouseEnter={() => handlePrefetchVideoCategory(category.id)}

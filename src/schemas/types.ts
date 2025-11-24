@@ -15,7 +15,7 @@ export interface User {
 export interface Category {
   id: number;
   name: string;
-  image: string;
+  image_path: string;
   description: string;
 }
 
