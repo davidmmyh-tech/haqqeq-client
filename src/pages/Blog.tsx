@@ -19,7 +19,7 @@ export default function BlogPage() {
     ogDescription: 'اكتشف مقالاتنا الجديدة والمميزة'
   });
 
-  const { data, isPending, isError, refetch, isFetching } = useQuery({
+  const { data, isPending, isError, refetch, isRefetching } = useQuery({
     queryKey: [BLOGS_PAGE_QUERY_KEY],
     queryFn: () => getBlogs({ page: 1, limit: 15 })
   });
@@ -33,7 +33,7 @@ export default function BlogPage() {
           isError={isError}
           isPending={isPending}
           retry={refetch}
-          isRefetching={isFetching}
+          isRefetching={isRefetching}
           isEmpty={!blogs[0]}
         >
           <BlogsHeroSection heroBlog={blogs.splice(0, 1)[0]} />
@@ -46,7 +46,7 @@ export default function BlogPage() {
             isError={isError}
             isPending={isPending}
             retry={refetch}
-            isRefetching={isFetching}
+            isRefetching={isRefetching}
             isEmpty={!blogs.length}
           >
             <MainBlogsSection blogs={blogs.splice(0, 4)} />
@@ -65,7 +65,7 @@ export default function BlogPage() {
           isError={isError}
           isPending={isPending}
           retry={refetch}
-          isRefetching={isFetching}
+          isRefetching={isRefetching}
           isEmpty={!blogs.length}
         >
           <MoreBlogsSection blogs={blogs} />

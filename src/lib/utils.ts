@@ -8,8 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function parsedDate(date?: string | null) {
-  const stringData = date || '';
-  return new Date(stringData).toLocaleDateString('ar-EG', {
+  if (!date) return null;
+  return new Date(date).toLocaleDateString('ar-EG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'

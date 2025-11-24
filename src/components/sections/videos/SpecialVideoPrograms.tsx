@@ -11,7 +11,7 @@ export default function SpecialVideoProgramsSection() {
   const { handlePrefetchVideoCategory } = usePrefetchVideoCategoryDetails();
 
   const { data, isPending, isError, refetch, isFetching } = useQuery({
-    queryKey: ['special-programs'],
+    queryKey: ['special-programs-videos'],
     queryFn: () => getVideosCategories({ page: 1, limit: 15 })
   });
 

@@ -38,47 +38,45 @@ export default function VideoDetailsPage() {
   });
 
   return (
-    <DataWrapper isError={isError} isPending={isPending} retry={refetch} isRefetching={isFetching} isEmpty={!data}>
-      <div className="container my-8 space-y-12">
-        <header className="space-y-2">
-          <DefaultMotionElement className="mb-4 text-[28px] font-medium" as="h1">
-            {video?.title}
-          </DefaultMotionElement>
+    <div className="container my-8 space-y-12">
+      <header className="space-y-2">
+        <DefaultMotionElement className="mb-4 text-[28px] font-medium" as="h1">
+          {video?.title}
+        </DefaultMotionElement>
 
-          <DefaultMotionElement as="p" className="text-muted mb-4 pe-14">
-            {video?.description}
-          </DefaultMotionElement>
+        <DefaultMotionElement as="p" className="text-muted mb-4 pe-14">
+          {video?.description}
+        </DefaultMotionElement>
 
-          <DefaultMotionElement as="p">
-            في <span className="font-bold">{video?.category.name}</span>
-            <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.published_at)}</span>
-          </DefaultMotionElement>
+        <DefaultMotionElement as="p">
+          في <span className="font-bold">{video?.category.name}</span>
+          <span className="text-muted ms-3 inline-block text-sm">{parsedDate(video?.published_at)}</span>
+        </DefaultMotionElement>
 
-          <DefaultMotionElement className="mt-8 flex justify-center">
-            <video
-              controls
-              src={remote(`${video?.video_url}`)}
-              poster={video?.image}
-              className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
-            />
-          </DefaultMotionElement>
-        </header>
+        <DefaultMotionElement className="mt-8 flex justify-center">
+          <video
+            controls
+            src={remote(`${video?.video_url}`)}
+            poster={video?.image}
+            className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
+          />
+        </DefaultMotionElement>
+      </header>
 
-        <section>
-          <DefaultMotionElement className="container space-y-8">
-            <SectionCard>
-              <p className="text-muted mt-4 text-xl">{video?.description}</p>
-            </SectionCard>
-          </DefaultMotionElement>
+      <section>
+        <DefaultMotionElement className="container space-y-8">
+          <SectionCard>
+            <p className="text-muted mt-4 text-xl">{video?.description}</p>
+          </SectionCard>
+        </DefaultMotionElement>
+      </section>
+
+      {relatedVideos.length > 0 && (
+        <section className="space-y-4">
+          <SectionHeader title="المزيد من حلقات حقق" icon={videos} />
+          <MoreVideosSection videos={relatedVideos} />
         </section>
-
-        {relatedVideos.length > 0 && (
-          <section className="space-y-4">
-            <SectionHeader title="المزيد من حلقات حقق" icon={videos} />
-            <MoreVideosSection videos={relatedVideos} />
-          </section>
-        )}
-      </div>
-    </DataWrapper>
+      )}
+    </div>
   );
 }
