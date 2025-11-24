@@ -4,7 +4,6 @@ import MoreVideosSection from '@/components/sections/videos/MoreVideos';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { VIDEO_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY } from '@/constants/query-keys';
 import { useDocumentHead } from '@/hooks/useDocumentHead';
-import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
 import { parsedDate, remote } from '@/lib/utils';
 import { getVideoDetails, getVideosCategoryDetails } from '@/services/getVideos';
@@ -14,7 +13,7 @@ import { useParams } from 'react-router';
 export default function VideoDetailsPage() {
   const { id = '' } = useParams<{ id: string }>();
 
-  const { data, isError, isPending, refetch, isFetching, isFetched } = useQuery({
+  const { data, isFetched } = useQuery({
     queryKey: [VIDEO_QUERY_KEY, id],
     queryFn: () => getVideoDetails(id),
     throwOnError: true,
