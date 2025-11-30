@@ -1,11 +1,12 @@
 import { videos } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
 import MoreVideosSection from '@/components/sections/videos/MoreVideos';
+import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { VIDEO_QUERY_KEY, VIDEOS_CATEGORY_QUERY_KEY } from '@/constants/query-keys';
 import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
-import { parsedDate, remote } from '@/lib/utils';
+import { getYouTubeEmbedUrl, parsedDate, remote } from '@/lib/utils';
 import { getVideoDetails, getVideosCategoryDetails } from '@/services/getVideos';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router';
@@ -53,12 +54,20 @@ export default function VideoDetailsPage() {
         </DefaultMotionElement>
 
         <DefaultMotionElement className="mt-8 flex justify-center">
-          <video
-            controls
-            src={remote(`${video?.video_url}`)}
-            poster={video?.image}
-            className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
-          />
+          {video?.video_url ? (
+            <iframe
+              src={getYouTubeEmbedUrl(video.video_url)}
+              className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <Img
+              src={remote(video?.image)}
+              alt={video?.title}
+              className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
+            />
+          )}
         </DefaultMotionElement>
       </header>
 

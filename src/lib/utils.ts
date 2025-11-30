@@ -49,3 +49,19 @@ export function showBodyScroll() {
   document.body.style.paddingRight = `0px`;
   document.body.style.overflowY = 'auto';
 }
+
+export function getYouTubeEmbedUrl(url: string): string {
+  if (!url) return '';
+  let videoId = '';
+
+  // Extract from youtube.com/watch?v=VIDEO_ID
+  const watchMatch = url.match(/[?&]v=([^&]+)/);
+  if (watchMatch) videoId = watchMatch[1];
+
+  if (!videoId) {
+    const sectors = url.split('/');
+    videoId = sectors[sectors.length - 1];
+  }
+
+  return `https://www.youtube.com/embed/${videoId}`;
+}

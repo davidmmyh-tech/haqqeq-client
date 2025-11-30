@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: ["main", "master"]
+    branches: ['main', 'master']
 
 concurrency:
   group: deploy-haqqeq
@@ -55,8 +55,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: 65002
-          source: "dist/*"
-          target: "/home/u795350111/domains/haqqeq.com/public_html_tmp"
+          source: 'dist/*'
+          target: '/home/u795350111/domains/haqqeq.com/public_html_tmp'
           strip_components: 1
           debug: true
           timeout: 60s

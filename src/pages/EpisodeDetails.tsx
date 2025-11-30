@@ -2,12 +2,13 @@ import { videos } from '@/assets/images';
 import SectionCard from '@/components/cards/SectionCard';
 import MoreEpisodesSection from '@/components/sections/podcast/MoreEpisodes';
 import HeroAudio from '@/components/ui/extend/HeroTarack';
+import Img from '@/components/ui/extend/Img';
 import SectionHeader from '@/components/ui/extend/SectionHeader';
 import { EPISODE_QUERY_KEY, PODCAST_QUERY_KEY } from '@/constants/query-keys';
 import { useDocumentHead } from '@/hooks/useDocumentHead';
 import DataWrapper from '@/layouts/DataWrapper';
 import DefaultMotionElement from '@/layouts/DefaultMotionElement';
-import { parsedDate, remote } from '@/lib/utils';
+import { getYouTubeEmbedUrl, parsedDate, remote } from '@/lib/utils';
 import { getEpisodeDetails } from '@/services/getEpisodes';
 import { getPodcastDetails } from '@/services/getPodcasts';
 import { useQuery } from '@tanstack/react-query';
@@ -62,12 +63,20 @@ export default function EpisodeDetailsPage() {
             </DefaultMotionElement>
 
             <DefaultMotionElement className="mt-8 flex justify-center">
-              <video
-                controls
-                src={remote(`${data?.video_url}`)}
-                poster={data?.image}
-                className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
-              />
+              {data?.video_url ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(data.video_url)}
+                  className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <Img
+                  src={remote(data?.image)}
+                  alt={data?.title}
+                  className="aspect-video w-full max-w-4xl rounded-2xl bg-black object-contain"
+                />
+              )}
             </DefaultMotionElement>
           </header>
 
